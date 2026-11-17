@@ -32,11 +32,15 @@ return Application::configure(basePath: dirname(__DIR__))
             'not.installed' => RedirectIfInstalled::class,
         ]);
 
-        $middleware->web(append: [
-            EnsureInstalled::class,
-            \App\Http\Middleware\HandleInertiaRequests::class,
-            ApiSecurityHeaders::class,
-        ]);
+        $middleware->web(
+            prepend: [
+                EnsureInstalled::class,
+            ],
+            append: [
+                \App\Http\Middleware\HandleInertiaRequests::class,
+                ApiSecurityHeaders::class,
+            ],
+        );
 
         $middleware->api(prepend: [
             EnsureInstalled::class,

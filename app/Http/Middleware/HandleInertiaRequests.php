@@ -30,16 +30,20 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        $settings = null;
-        try {
-            $settings = Setting::all()->mapWithKeys(function (Setting $s) {
-                return [$s->id => $s->value];
-            });
-        } catch (\Throwable $e) {
-            $settings = collect();
+        $installed = (new \App\Installer\InstallationLock())->isInstalled();
+
+        $settings = collect();
+        if ($installed) {
+            try {
+                $settings = Setting::all()->mapWithKeys(function (Setting $s) {
+                    return [$s->id => $s->value];
+                });
+            } catch (\Throwable $e) {
+                $settings = collect();
+            }
         }
 
-        $userId = $request->session()->get('userId') ?? $request->user()?->id;
+        $userId = $installed ? ($request->session()->get('userId') ?? $request->user()?->id) : null;
 
         return [
             ...parent::share($request),

@@ -27,6 +27,12 @@ class EnsureInstalled
             return $next($request);
         }
 
+        // Force safe file/array session & cache drivers and ephemeral APP_KEY while uninstalled
+        InstallationLock::configurePreInstallRuntime();
+        if (!$request->isSecure()) {
+            config(['session.secure' => false]);
+        }
+
         // 2. Allow installer routes, health checks, and static assets
         if (
             $request->is('install*') ||

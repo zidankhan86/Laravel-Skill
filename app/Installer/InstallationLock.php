@@ -12,6 +12,36 @@ class InstallationLock
         self::$fakeInstalled = $fake;
     }
 
+    /**
+     * Configure safe file/array runtime drivers and an ephemeral APP_KEY while uninstalled
+     * so the web installer can run on fresh servers without a configured database or .env.
+     */
+    public static function configurePreInstallRuntime(): void
+    {
+        if (!function_exists('config') || !function_exists('app') || !app()->has('config')) {
+            return;
+        }
+
+        $sessionPath = storage_path('framework/sessions');
+        if (!is_dir($sessionPath)) {
+            @mkdir($sessionPath, 0755, true);
+        }
+        $sessionDriver = (is_dir($sessionPath) && is_writable($sessionPath)) ? 'file' : 'array';
+        config(['session.driver' => $sessionDriver]);
+
+        $cachePath = storage_path('framework/cache/data');
+        if (!is_dir($cachePath)) {
+            @mkdir($cachePath, 0755, true);
+        }
+        $cacheDriver = (is_dir($cachePath) && is_writable($cachePath)) ? 'file' : 'array';
+        config(['cache.default' => $cacheDriver]);
+
+        if (empty(config('app.key'))) {
+            $ephemeralKey = 'base64:' . base64_encode(hash('sha256', base_path() . '|installer-bootstrap-key', true));
+            config(['app.key' => $ephemeralKey]);
+        }
+    }
+
     public function __construct(?string $lockFilePath = null)
     {
         if ($lockFilePath !== null) {

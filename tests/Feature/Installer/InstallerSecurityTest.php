@@ -63,4 +63,36 @@ class InstallerSecurityTest extends TestCase
         $res->assertJson(['success' => false]);
         $this->assertStringContainsString('14 characters', $res->json('message'));
     }
+
+    public function test_uninstalled_site_and_wizard_work_without_database_or_app_key(): void
+    {
+        InstallationLock::fakeInstalled(false);
+
+        // Simulate a fresh server with invalid DB credentials, database session/cache drivers, and empty APP_KEY
+        config([
+            'session.driver' => 'database',
+            'cache.default' => 'database',
+            'app.key' => '',
+            'database.connections.mysql.username' => 'nonexistent_user',
+            'database.connections.mysql.password' => 'wrong_password',
+        ]);
+        app()->forgetInstance('session');
+        app()->forgetInstance('session.store');
+        app()->forgetInstance('cache');
+        app()->forgetInstance('encrypter');
+        \Illuminate\Support\Facades\DB::purge('mysql');
+
+        // 1. Root URL must redirect cleanly to /install without querying MySQL
+        $rootRes = $this->get('/');
+        $rootRes->assertRedirect('/install');
+
+        // 2. /install wizard must render 200 OK without touching MySQL or throwing MissingAppKeyException
+        $wizardRes = $this->get('/install');
+        $wizardRes->assertStatus(200);
+        $wizardRes->assertInertia(fn ($page) => $page->component('Installer/Wizard'));
+
+        // 3. /api/installer/requirements must work even with throttle middleware when cache was database
+        $reqRes = $this->getJson('/api/installer/requirements');
+        $reqRes->assertStatus(200);
+    }
 }

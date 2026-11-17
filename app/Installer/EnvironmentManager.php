@@ -36,12 +36,16 @@ class EnvironmentManager
         $appKey = $config['APP_KEY'] ?? ('base64:' . base64_encode(random_bytes(32)));
 
         // 3. Define mandatory production variables
+        $appUrl = rtrim((string) ($config['APP_URL'] ?? 'http://localhost'), '/');
+        $isHttps = str_starts_with(strtolower($appUrl), 'https://');
+
         $variables = array_merge([
             'APP_NAME' => $config['APP_NAME'] ?? 'Portfolio CMS',
             'APP_ENV' => 'production',
             'APP_KEY' => $appKey,
             'APP_DEBUG' => 'false',
-            'APP_URL' => $config['APP_URL'] ?? 'http://localhost',
+            'APP_URL' => $appUrl,
+            'APP_ORIGIN' => $appUrl,
             'LOG_CHANNEL' => 'daily',
             'LOG_LEVEL' => 'warning',
             'DB_CONNECTION' => 'mysql',
@@ -54,6 +58,7 @@ class EnvironmentManager
             'SESSION_LIFETIME' => '120',
             'SESSION_COOKIE' => 'portfolio_sid',
             'SESSION_TABLE' => 'laravel_sessions',
+            'SESSION_SECURE_COOKIE' => $isHttps ? 'true' : 'false',
             'CACHE_STORE' => 'database',
             'CACHE_TABLE' => 'cache',
             'QUEUE_CONNECTION' => 'database',
