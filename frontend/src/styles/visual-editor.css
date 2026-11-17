@@ -1,0 +1,268 @@
+.visual-editor-shell {
+  padding: 60px;
+  font:
+    16px Inter,
+    sans-serif;
+}
+.editor-toolbar,
+.editor-dialog,
+.editor-error {
+  font-family: Inter, "Hind Siliguri", sans-serif;
+  color: #153731;
+  background: #fff;
+  box-sizing: border-box;
+}
+.editor-toolbar {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 12000;
+  min-height: 72px;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  border-bottom: 1px solid #d8e3df;
+  box-shadow: 0 4px 18px #0001;
+}
+.editor-toolbar a,
+.editor-toolbar button,
+.editor-dialog button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 10px 14px;
+  border: 1px solid #c8d5d1;
+  border-radius: 10px;
+  color: #153731;
+  background: #fff;
+  font-size: 13px;
+  font-weight: 650;
+  cursor: pointer;
+  text-decoration: none;
+}
+.editor-toolbar > div {
+  display: flex;
+  flex-direction: column;
+}
+.editor-toolbar small {
+  font-size: 11px;
+  color: #59716a;
+}
+.editor-status {
+  margin-left: auto;
+  font-size: 12px;
+}
+.editor-toolbar .editor-save,
+.editor-dialog .editor-save {
+  background: #153731;
+  color: #fff;
+  border-color: #153731;
+}
+.editor-toolbar button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.editor-canvas {
+  padding-top: 74px;
+}
+.editor-canvas .portfolio .public-nav {
+  top: 74px;
+}
+.editor-canvas [data-edit-source] {
+  cursor: pointer !important;
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+.editor-canvas [data-edit-source]:hover,
+.editor-canvas [data-edit-source]:focus-visible {
+  outline: 2px dashed #2181e5;
+  background-color: #2181e51a;
+}
+.editor-canvas .empty-edit {
+  font:
+    12px Inter,
+    sans-serif;
+  opacity: 0.7;
+}
+.editor-canvas .portfolio [data-reveal] {
+  opacity: 1 !important;
+  translate: none !important;
+  animation: none !important;
+}
+.editor-canvas .portfolio .hero-skill {
+  animation: none !important;
+}
+.editor-error {
+  position: sticky;
+  top: 72px;
+  z-index: 12001;
+  border-bottom: 1px solid #efaca6;
+  background: #fff1ed;
+  padding: 12px 20px;
+}
+.editor-error button {
+  margin-left: 12px;
+  text-decoration: underline;
+}
+.editor-dialog {
+  border: 0;
+  border-radius: 20px;
+  width: min(760px, calc(100% - 24px));
+  max-height: 85dvh;
+  padding: 24px;
+  box-shadow: 0 24px 80px #0005;
+}
+.editor-dialog::backdrop {
+  background: #071b16aa;
+  backdrop-filter: blur(3px);
+}
+.editor-dialog header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.editor-dialog h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+}
+.editor-dialog form {
+  display: grid;
+  gap: 16px;
+}
+.editor-dialog label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+}
+.editor-dialog textarea {
+  display: block;
+  box-sizing: border-box;
+  margin-top: 8px;
+  width: 100%;
+  resize: vertical;
+  font: inherit;
+  font-size: 17px;
+  line-height: 1.65;
+  padding: 14px;
+  border: 1px solid #b2c5bf;
+  border-radius: 10px;
+  background: #f6f9f7;
+  color: #153731;
+}
+.editor-dialog small,
+.editor-dialog p {
+  color: #536e65;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.editor-dialog [role="alert"] {
+  color: #a02424;
+}
+.editor-media-tools {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.editor-media-tools label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.editor-media-tools input[type="text"],
+.editor-media-tools input:not([type]) {
+  border: 1px solid #c8d5d1;
+  padding: 10px;
+  border-radius: 8px;
+  color: #153731;
+  background: white;
+}
+.editor-upload {
+  position: relative;
+  cursor: pointer;
+  border: 1px solid #c8d5d1;
+  border-radius: 8px;
+  padding: 10px;
+}
+.editor-upload input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+}
+.editor-media-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 18px 0;
+}
+.editor-media-grid button {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 7px;
+}
+.editor-media-grid img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+.editor-media-grid span {
+  font-size: 11px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+.editor-dialog :focus-visible,
+.editor-toolbar :focus-visible {
+  outline: 3px solid #2885e3;
+  outline-offset: 3px;
+}
+@media (max-width: 650px) {
+  .editor-toolbar {
+    padding: 8px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .editor-toolbar > div {
+    flex: 1;
+  }
+  .editor-toolbar small {
+    display: none;
+  }
+  .editor-status {
+    order: 5;
+    width: 100%;
+    margin: 0;
+    text-align: center;
+  }
+  .editor-toolbar button,
+  .editor-toolbar a {
+    padding: 8px;
+    font-size: 11px;
+  }
+  .editor-toolbar strong {
+    font-size: 13px;
+  }
+  .editor-canvas {
+    padding-top: 91px;
+  }
+  .editor-canvas .portfolio .public-nav {
+    top: 91px;
+  }
+  .editor-dialog {
+    padding: 16px;
+  }
+  .editor-media-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.editor-canvas { padding-top: var(--editor-toolbar-height, 74px); }
+.editor-canvas .portfolio .public-nav { top: var(--editor-toolbar-height, 74px); }
+.editor-error { top: var(--editor-toolbar-height, 74px); }

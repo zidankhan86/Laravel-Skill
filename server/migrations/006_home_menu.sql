@@ -1,0 +1,1 @@
+UPDATE settings SET value=JSON_SET(value, '$.menu', CONCAT('Home|/\n', JSON_UNQUOTE(JSON_EXTRACT(value, '$.menu')))), version=version+1 WHERE id='navigation' AND LOCATE('Home|/', JSON_UNQUOTE(JSON_EXTRACT(value, '$.menu')))=0;

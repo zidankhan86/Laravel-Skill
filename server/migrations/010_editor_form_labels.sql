@@ -1,0 +1,14 @@
+UPDATE settings SET value=JSON_SET(value, '$.bookingHeading', CONVERT(0x5265717565737420612073747261746567792063616c6c USING utf8mb4)), version=version+1 WHERE id='ui' AND JSON_CONTAINS_PATH(value, 'one', '$.bookingHeading')=0;
+UPDATE settings SET value=JSON_SET(value, '$.contactHeading', CONVERT(0x53656e642061206d657373616765 USING utf8mb4)), version=version+1 WHERE id='ui' AND JSON_CONTAINS_PATH(value, 'one', '$.contactHeading')=0;
+UPDATE settings SET value=JSON_SET(value, '$.nameLabel', CONVERT(0x4e616d65 USING utf8mb4)), version=version+1 WHERE id='ui' AND JSON_CONTAINS_PATH(value, 'one', '$.nameLabel')=0;
+UPDATE settings SET value=JSON_SET(value, '$.emailLabel', CONVERT(0x456d61696c USING utf8mb4)), version=version+1 WHERE id='ui' AND JSON_CONTAINS_PATH(value, 'one', '$.emailLabel')=0;
+UPDATE settings SET value=JSON_SET(value, '$.phoneLabel', CONVERT(0x50686f6e6520286f7074696f6e616c29 USING utf8mb4)), version=version+1 WHERE id='ui' AND JSON_CONTAINS_PATH(value, 'one', '$.phoneLabel')=0;
+UPDATE settings SET value=JSON_SET(value, '$.sendBooking', CONVERT(0x53656e6420626f6f6b696e672072657175657374 USING utf8mb4)), version=version+1 WHERE id='ui' AND JSON_CONTAINS_PATH(value, 'one', '$.sendBooking')=0;
+UPDATE settings SET value=JSON_SET(value, '$.sendContact', CONVERT(0x53656e64206d657373616765 USING utf8mb4)), version=version+1 WHERE id='ui' AND JSON_CONTAINS_PATH(value, 'one', '$.sendContact')=0;
+UPDATE settings SET value=JSON_SET(value, '$.freeLabel', CONVERT(0x46726565 USING utf8mb4)), version=version+1 WHERE id='ui' AND JSON_CONTAINS_PATH(value, 'one', '$.freeLabel')=0;
+UPDATE settings SET value=JSON_SET(value, '$.paidLabel', CONVERT(0x50616964 USING utf8mb4)), version=version+1 WHERE id='ui' AND JSON_CONTAINS_PATH(value, 'one', '$.paidLabel')=0;
+UPDATE settings SET value=JSON_SET(value, '$.previewUnavailable', CONVERT(0x5072657669657720756e617661696c61626c65 USING utf8mb4)), version=version+1 WHERE id='ui' AND JSON_CONTAINS_PATH(value, 'one', '$.previewUnavailable')=0;
+UPDATE settings SET value=JSON_SET(value, '$.dateLabel', CONVERT(0x507265666572726564206461746520616e642074696d65 USING utf8mb4)), version=version+1 WHERE id='ui' AND JSON_CONTAINS_PATH(value, 'one', '$.dateLabel')=0;
+UPDATE settings SET value=JSON_SET(value, '$.datePlaceholder', CONVERT(0x43686f6f73652061206461746520616e642074696d65 USING utf8mb4)), version=version+1 WHERE id='ui' AND JSON_CONTAINS_PATH(value, 'one', '$.datePlaceholder')=0;
+UPDATE settings SET value=JSON_SET(value, '$.timezoneLabel', CONVERT(0x596f75722074696d657a6f6e653a USING utf8mb4)), version=version+1 WHERE id='ui' AND JSON_CONTAINS_PATH(value, 'one', '$.timezoneLabel')=0;
+UPDATE settings SET value=JSON_SET(value, '$.bookingNotice', CONVERT(0x412072657175657374206973206e6f74206120636f6e6669726d6564206170706f696e746d656e742e USING utf8mb4)), version=version+1 WHERE id='ui' AND JSON_CONTAINS_PATH(value, 'one', '$.bookingNotice')=0;

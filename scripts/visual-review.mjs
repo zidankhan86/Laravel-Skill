@@ -1,0 +1,3 @@
+import {chromium} from '@playwright/test';
+const b=await chromium.launch({executablePath:process.env.BROWSER_EXECUTABLE||'/Applications/Brave Browser.app/Contents/MacOS/Brave Browser',headless:true});
+try{for(const [name,port] of [['baseline',3002],['cms',3000]])for(const [size,width,height]of [['desktop',1440,1000],['mobile',390,844]]){const p=await b.newPage({viewport:{width,height}});await p.goto('http://localhost:'+port,{waitUntil:'domcontentloaded'});await p.locator('h1').waitFor();await p.waitForTimeout(1500);await p.screenshot({path:`docs/screenshots/${name}-${size}-hero.png`});await p.close();}}finally{await b.close();}

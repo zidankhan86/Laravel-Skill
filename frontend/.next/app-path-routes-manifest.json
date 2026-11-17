@@ -1,0 +1,14 @@
+{
+  "/_not-found/page": "/_not-found",
+  "/[collection]/[slug]/page": "/[collection]/[slug]",
+  "/page": "/",
+  "/about/page": "/about",
+  "/admin/page": "/admin",
+  "/blog/page": "/blog",
+  "/contact/page": "/contact",
+  "/booking/page": "/booking",
+  "/deals/page": "/deals",
+  "/projects/page": "/projects",
+  "/resources/page": "/resources",
+  "/services/page": "/services"
+}

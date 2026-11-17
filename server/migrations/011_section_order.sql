@@ -1,0 +1,1 @@
+UPDATE settings SET value=JSON_SET(value, '$.sectionOrder', COALESCE(JSON_UNQUOTE(JSON_EXTRACT(value, '$.sections')), '')), version=version+1 WHERE id='homepage' AND JSON_CONTAINS_PATH(value, 'one', '$.sectionOrder')=0;
