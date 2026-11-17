@@ -66,3 +66,13 @@ Route::prefix('admin')->middleware(['auth.custom', 'origin', 'custom.csrf'])->gr
     Route::get('/editor', [EditorController::class, 'snapshot']);
     Route::patch('/editor', [EditorController::class, 'batchSave']);
 });
+
+// Automated Web Installer API Endpoints
+Route::prefix('installer')->middleware([\App\Http\Middleware\RedirectIfInstalled::class, 'throttle:60,1'])->group(function () {
+    Route::get('/requirements', [\App\Http\Controllers\Installer\InstallerController::class, 'checkRequirements']);
+    Route::post('/test-database', [\App\Http\Controllers\Installer\InstallerController::class, 'testDatabase']);
+    Route::post('/verify-hosting', [\App\Http\Controllers\Installer\InstallerController::class, 'verifyHosting']);
+    Route::post('/create-database', [\App\Http\Controllers\Installer\InstallerController::class, 'createHostingDatabase']);
+    Route::post('/step', [\App\Http\Controllers\Installer\InstallerController::class, 'executeStep']);
+    Route::get('/state', [\App\Http\Controllers\Installer\InstallerController::class, 'getState']);
+});
