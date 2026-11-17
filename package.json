@@ -12,6 +12,8 @@
     "test:integration": "node scripts/verify-phase8-integration-20points.mjs",
     "test:visual": "node scripts/verify-phase8-visual-regression.mjs",
     "test:chrome": "node scripts/verify-inertia-chrome.mjs",
+    "test:installer": "php artisan test --filter=Installer && node scripts/verify-installer-chrome.mjs",
+    "package": "php scripts/package-release.php",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

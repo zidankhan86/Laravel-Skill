@@ -32,3 +32,8 @@ Route::get('/{collection}/{slug}', [DetailController::class, 'show'])->name('det
 
 // Admin Workspace
 Route::get('/admin', [AdminWebController::class, 'index'])->name('admin');
+
+// Zero-Knowledge Web Installer
+Route::get('/install', [\App\Http\Controllers\Installer\InstallerController::class, 'index'])
+    ->name('installer.wizard')
+    ->middleware([\App\Http\Middleware\RedirectIfInstalled::class]);

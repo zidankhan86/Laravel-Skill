@@ -3,6 +3,8 @@
 use App\Http\Middleware\ApiSecurityHeaders;
 use App\Http\Middleware\AuthenticateAdmin;
 use App\Http\Middleware\EnsureCsrfToken;
+use App\Http\Middleware\EnsureInstalled;
+use App\Http\Middleware\RedirectIfInstalled;
 use App\Http\Middleware\VerifyAppOrigin;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -26,14 +28,18 @@ return Application::configure(basePath: dirname(__DIR__))
             'origin' => VerifyAppOrigin::class,
             'custom.csrf' => EnsureCsrfToken::class,
             'auth.custom' => AuthenticateAdmin::class,
+            'installed' => EnsureInstalled::class,
+            'not.installed' => RedirectIfInstalled::class,
         ]);
 
         $middleware->web(append: [
+            EnsureInstalled::class,
             \App\Http\Middleware\HandleInertiaRequests::class,
             ApiSecurityHeaders::class,
         ]);
 
         $middleware->api(prepend: [
+            EnsureInstalled::class,
             StartSession::class,
             ApiSecurityHeaders::class,
         ]);
