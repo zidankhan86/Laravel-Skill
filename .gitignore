@@ -34,3 +34,7 @@ test-results/
 .dist/
 storage/installed.lock
 storage/installer_state.json
+
+# Ensure production frontend build assets are tracked for zero-dependency web deployments
+!public/build/
+!public/build/**
