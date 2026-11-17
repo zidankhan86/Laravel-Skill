@@ -1,5 +1,13 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteBase /
-    RewriteRule ^(.*)$ public/$1 [L]
+
+    # Block direct access to non-public files inside portfolio/ (e.g. .env, app/, storage/)
+    RewriteCond %{REQUEST_URI} ^/portfolio/ [NC]
+    RewriteCond %{REQUEST_URI} !^/portfolio/public/ [NC]
+    RewriteRule ^ - [F,L]
+
+    # Route all root domain requests to portfolio/public/
+    RewriteCond %{REQUEST_URI} !^/portfolio/public/ [NC]
+    RewriteRule ^(.*)$ portfolio/public/$1 [L]
 </IfModule>
