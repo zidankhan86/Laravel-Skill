@@ -1,0 +1,1193 @@
+{
+  "about": {
+    "AboutMeSection_1": {
+      "max": 10000,
+      "url": false,
+      "label": "AboutMeSection: My Journey"
+    },
+    "AboutMeSection_2": {
+      "max": 10000,
+      "url": false,
+      "label": "AboutMeSection: I Help Founders Transition From "
+    },
+    "AboutMeSection_3": {
+      "max": 10000,
+      "url": false,
+      "label": "AboutMeSection: Chaos To Absolute Control"
+    },
+    "AboutMeSection_4": {
+      "max": 10000,
+      "url": false,
+      "label": "AboutMeSection: \""
+    },
+    "AboutMeSection_5": {
+      "max": 10000,
+      "url": false,
+      "label": "AboutMeSection: \""
+    },
+    "AboutMeSection_6": {
+      "max": 10000,
+      "url": false,
+      "label": "AboutMeSection: Read Full Story "
+    },
+    "AboutPage_1": {
+      "max": 10000,
+      "url": false,
+      "label": "AboutPage: Back to Home"
+    },
+    "AboutPage_2": {
+      "max": 10000,
+      "url": false,
+      "label": "AboutPage: The Story Behind "
+    },
+    "AboutPage_3": {
+      "max": 10000,
+      "url": false,
+      "label": "AboutPage: The Systems."
+    },
+    "AboutPage_4": {
+      "max": 10000,
+      "url": false,
+      "label": "AboutPage: আমি বিশ্বাস করি— আজকের দিনে ব্যবসা ব্যর্থ হয় প্রোডাক্টের জন্য না"
+    },
+    "AboutPage_5": {
+      "max": 10000,
+      "url": false,
+      "label": "AboutPage: আমার এই দীর্ঘ যাত্রায় আমি দেখেছি অসংখ্য উদ্যোক্তা তাদের ব্যবসার \""
+    },
+    "AboutPage_6": {
+      "max": 10000,
+      "url": false,
+      "label": "AboutPage: 5+ Years"
+    },
+    "AboutPage_7": {
+      "max": 10000,
+      "url": false,
+      "label": "AboutPage: Of deep industry experience in high-growth eCommerce."
+    },
+    "AboutPage_8": {
+      "max": 10000,
+      "url": false,
+      "label": "AboutPage: ROI Focused"
+    },
+    "AboutPage_9": {
+      "max": 10000,
+      "url": false,
+      "label": "AboutPage: Every line of code and every funnel is built for profit."
+    },
+    "AboutPage_10": {
+      "max": 10000,
+      "url": false,
+      "label": "AboutPage: \"My mission is to help Bangladeshi founders build businesses that"
+    },
+    "AboutSection_1": {
+      "max": 10000,
+      "url": false,
+      "label": "AboutSection: Who I Am & Why I Exist"
+    },
+    "AboutSection_2": {
+      "max": 10000,
+      "url": false,
+      "label": "AboutSection: আমি বিশ্বাস করি— আজকের দিনে ব্যবসা ব্যর্থ হয় প্রোডাক্টের জন্য না"
+    },
+    "AboutSection_3": {
+      "max": 10000,
+      "url": false,
+      "label": "AboutSection: ❌ Chaos থেকে"
+    },
+    "AboutSection_4": {
+      "max": 10000,
+      "url": false,
+      "label": "AboutSection: ➔"
+    },
+    "AboutSection_5": {
+      "max": 10000,
+      "url": false,
+      "label": "AboutSection: ✅ Control এ আনা"
+    },
+    "AboutSection_6": {
+      "max": 10000,
+      "url": false,
+      "label": "AboutSection: আমার মিশন হলো— বাংলাদেশের উদ্যোক্তাদের জন্য ওয়েবসাইট, অটোমেশন, কা"
+    },
+    "AboutSection_7": {
+      "max": 10000,
+      "url": false,
+      "label": "AboutSection: Our Mission"
+    },
+    "AboutSection_8": {
+      "max": 10000,
+      "url": false,
+      "label": "AboutSection: বাংলাদেশের উদ্যোক্তাদের জন্য System-driven, automation-ready eCom"
+    },
+    "AboutSection_9": {
+      "max": 10000,
+      "url": false,
+      "label": "AboutSection: Our Vision"
+    },
+    "AboutSection_10": {
+      "max": 10000,
+      "url": false,
+      "label": "AboutSection: বাংলাদেশে এমন একটি স্ট্যান্ডার্ড তৈরি করা যেখানে ওয়েবসাইট মানেই "
+    },
+    "AboutSection_11": {
+      "max": 10000,
+      "url": false,
+      "label": "AboutSection: 👉 Trust 👉 Automation 👉 Sales Machine."
+    },
+    "AboutSection_12": {
+      "max": 10000,
+      "url": false,
+      "label": "AboutSection: Our Belief"
+    },
+    "AboutSection_13": {
+      "max": 10000,
+      "url": false,
+      "label": "AboutSection: “A website should think like a customer, not look like a poster.”"
+    }
+  },
+  "homepage": {
+    "AllDeals_1": {
+      "max": 10000,
+      "url": false,
+      "label": "AllDeals: Back to Home"
+    },
+    "AllDeals_2": {
+      "max": 10000,
+      "url": false,
+      "label": "AllDeals: Exclusive Deals"
+    },
+    "AllDeals_3": {
+      "max": 10000,
+      "url": false,
+      "label": "AllDeals: Empower your business with top-tier tools and hosting at discount"
+    },
+    "AllDeals_4": {
+      "max": 10000,
+      "url": false,
+      "label": "AllDeals: Grab This Deal "
+    },
+    "AllProjects_1": {
+      "max": 10000,
+      "url": false,
+      "label": "AllProjects: Back to Home"
+    },
+    "AllProjects_2": {
+      "max": 10000,
+      "url": false,
+      "label": "AllProjects: Portfolio"
+    },
+    "AllProjects_3": {
+      "max": 10000,
+      "url": false,
+      "label": "AllProjects: A selection of ecosystems I have architected to drive millions in"
+    },
+    "AllProjects_4": {
+      "max": 10000,
+      "url": false,
+      "label": "AllProjects: Live Preview "
+    },
+    "AllResources_1": {
+      "max": 10000,
+      "url": false,
+      "label": "AllResources: Back to Home"
+    },
+    "AllResources_2": {
+      "max": 10000,
+      "url": false,
+      "label": "AllResources: Free & Paid Resources"
+    },
+    "AllResources_3": {
+      "max": 10000,
+      "url": false,
+      "label": "AllResources: Download my proprietary documents, ecommerce blueprints, and inve"
+    },
+    "AllResources_4": {
+      "max": 10000,
+      "url": false,
+      "label": "AllResources: Download Now "
+    },
+    "AllResources_5": {
+      "max": 10000,
+      "url": false,
+      "label": "AllResources: Get Access "
+    },
+    "AllServices_1": {
+      "max": 10000,
+      "url": false,
+      "label": "AllServices: Back to Home"
+    },
+    "AllServices_2": {
+      "max": 10000,
+      "url": false,
+      "label": "AllServices: Expert Services"
+    },
+    "AllServices_3": {
+      "max": 10000,
+      "url": false,
+      "label": "AllServices: Complete high-performance solutions designed for business growth,"
+    },
+    "BookingSection_1": {
+      "max": 10000,
+      "url": false,
+      "label": "BookingSection: Let's Build Your "
+    },
+    "BookingSection_2": {
+      "max": 10000,
+      "url": false,
+      "label": "BookingSection: Sales Ecosystem"
+    },
+    "BookingSection_3": {
+      "max": 10000,
+      "url": false,
+      "label": "BookingSection: Free 30-min Strategy Call"
+    },
+    "BookingSection_4": {
+      "max": 10000,
+      "url": false,
+      "label": "BookingSection: Deep dive into your current business bottlenecks and roadmap to s"
+    },
+    "BookingSection_5": {
+      "max": 10000,
+      "url": false,
+      "label": "BookingSection: Global & Local Delivery"
+    },
+    "BookingSection_6": {
+      "max": 10000,
+      "url": false,
+      "label": "BookingSection: Available for brands in Bangladesh and internationally."
+    },
+    "BookingSection_7": {
+      "max": 10000,
+      "url": false,
+      "label": "BookingSection: Email Me"
+    },
+    "BookingSection_8": {
+      "max": 10000,
+      "url": false,
+      "label": "BookingSection: Call Direct"
+    },
+    "BookingSection_9": {
+      "max": 10000,
+      "url": false,
+      "label": "BookingSection: WhatsApp"
+    },
+    "BookingSection_10": {
+      "max": 10000,
+      "url": false,
+      "label": "BookingSection: Calendar Integration Placeholder"
+    },
+    "BookingSection_11": {
+      "max": 10000,
+      "url": false,
+      "label": "BookingSection: Book Meeting Now"
+    },
+    "BookingSection_12": {
+      "max": 10000,
+      "url": false,
+      "label": "BookingSection: আপনি যদি শুধু ওয়েবসাইট না, একটা সিস্টেম, কন্ট্রোল আর ফিউচার চান— "
+    },
+    "BookingSection_13": {
+      "max": 10000,
+      "url": false,
+      "label": "BookingSection: Start Your Journey"
+    },
+    "DealsSection_1": {
+      "max": 10000,
+      "url": false,
+      "label": "DealsSection: Recommended Tools & Deals"
+    },
+    "DealsSection_2": {
+      "max": 10000,
+      "url": false,
+      "label": "DealsSection: Exclusive discounts on high-performance hosting, themes, and busi"
+    },
+    "DealsSection_3": {
+      "max": 10000,
+      "url": false,
+      "label": "DealsSection: Claim Deal "
+    },
+    "DealsSection_4": {
+      "max": 10000,
+      "url": false,
+      "label": "DealsSection: View All Deals "
+    },
+    "FloatingActions_1": {
+      "max": 10000,
+      "url": false,
+      "label": "FloatingActions: Chat on WhatsApp"
+    },
+    "Hero_1": {
+      "max": 10000,
+      "url": false,
+      "label": "Hero: Experience"
+    },
+    "Hero_2": {
+      "max": 10000,
+      "url": false,
+      "label": "Hero: 5+ Years"
+    },
+    "Hero_3": {
+      "max": 10000,
+      "url": false,
+      "label": "Hero: Available for New Projects"
+    },
+    "Hero_4": {
+      "max": 10000,
+      "url": false,
+      "label": "Hero: Founder, "
+    },
+    "Hero_5": {
+      "max": 10000,
+      "url": false,
+      "label": "Hero: eCommerce Website Architect & "
+    },
+    "Hero_6": {
+      "max": 10000,
+      "url": false,
+      "label": "Hero: Automation Specialist"
+    },
+    "Hero_7": {
+      "max": 10000,
+      "url": false,
+      "label": "Hero: আমি শুধু ওয়েবসাইট বানাই না। আমি কাস্টমারের সাইকোলজি, অটোমেশন এবং"
+    },
+    "Hero_8": {
+      "max": 10000,
+      "url": false,
+      "label": "Hero: Ultimate Sales Machine"
+    },
+    "Hero_9": {
+      "max": 10000,
+      "url": false,
+      "label": "Hero: এ রূপান্তর করি।"
+    },
+    "Hero_10": {
+      "max": 10000,
+      "url": false,
+      "label": "Hero: Book a Strategy Call"
+    },
+    "Hero_11": {
+      "max": 10000,
+      "url": false,
+      "label": "Hero: Contact Me"
+    },
+    "Hero_12": {
+      "max": 10000,
+      "url": false,
+      "label": "Hero: ❝ I don’t sell websites. I design how customers think, trust and "
+    },
+    "ProjectsSection_1": {
+      "max": 10000,
+      "url": false,
+      "label": "ProjectsSection: Systems I’ve Built"
+    },
+    "ProjectsSection_2": {
+      "max": 10000,
+      "url": false,
+      "label": "ProjectsSection: A glimpse into high-performance architectures delivered for thriv"
+    },
+    "ProjectsSection_3": {
+      "max": 10000,
+      "url": false,
+      "label": "ProjectsSection: View Demo "
+    },
+    "ProjectsSection_4": {
+      "max": 10000,
+      "url": false,
+      "label": "ProjectsSection: Explore Portfolio "
+    },
+    "ResourcesSection_1": {
+      "max": 10000,
+      "url": false,
+      "label": "ResourcesSection: Ebooks & Resources"
+    },
+    "ResourcesSection_2": {
+      "max": 10000,
+      "url": false,
+      "label": "ResourcesSection: Level up your business with my curated guides, documents, and aut"
+    },
+    "ResourcesSection_3": {
+      "max": 10000,
+      "url": false,
+      "label": "ResourcesSection: Download Free"
+    },
+    "ResourcesSection_4": {
+      "max": 10000,
+      "url": false,
+      "label": "ResourcesSection: Get on WhatsApp"
+    },
+    "ResourcesSection_5": {
+      "max": 10000,
+      "url": false,
+      "label": "ResourcesSection: Explore All Resources "
+    },
+    "ServicesSection_1": {
+      "max": 10000,
+      "url": false,
+      "label": "ServicesSection: Premium Solutions"
+    },
+    "ServicesSection_2": {
+      "max": 10000,
+      "url": false,
+      "label": "ServicesSection: Focused on ROI, psychology, and long-term business sustainability"
+    },
+    "ServicesSection_3": {
+      "max": 2048,
+      "url": true,
+      "label": "ServicesSection: #booking"
+    },
+    "ServicesSection_4": {
+      "max": 10000,
+      "url": false,
+      "label": "ServicesSection: Book Now"
+    },
+    "ServicesSection_5": {
+      "max": 10000,
+      "url": false,
+      "label": "ServicesSection: View All Services "
+    },
+    "TestimonialsSection_1": {
+      "max": 10000,
+      "url": false,
+      "label": "TestimonialsSection: What Founders Say"
+    },
+    "TestimonialsSection_2": {
+      "max": 10000,
+      "url": false,
+      "label": "TestimonialsSection: Real feedback from business owners who transformed their operatio"
+    },
+    "TestimonialsSection_3": {
+      "max": 10000,
+      "url": false,
+      "label": "TestimonialsSection: \""
+    },
+    "TestimonialsSection_4": {
+      "max": 10000,
+      "url": false,
+      "label": "TestimonialsSection: \""
+    },
+    "YouTubeSection_1": {
+      "max": 10000,
+      "url": false,
+      "label": "YouTubeSection: Learn How Modern eCommerce Really Works"
+    },
+    "YouTubeSection_2": {
+      "max": 10000,
+      "url": false,
+      "label": "YouTubeSection: আমি নিয়মিত ভিডিও শেয়ার করি যেখানে আলোচনা করি কেন ৯০% eCommerce fa"
+    },
+    "YouTubeSection_3": {
+      "max": 10000,
+      "url": false,
+      "label": "YouTubeSection: Subscribe on YouTube"
+    },
+    "sections": {
+      "max": 500,
+      "url": false,
+      "label": "Homepage section order and visibility (comma-separated keys; omit to hide)"
+    },
+    "expertise": {
+      "max": 2000,
+      "url": false,
+      "label": "Expertise strip: one label per line (reorder or remove)"
+    },
+    "heroPrimaryTarget": {
+      "max": 2048,
+      "url": true,
+      "label": "heroPrimaryTarget"
+    },
+    "heroSecondaryTarget": {
+      "max": 2048,
+      "url": true,
+      "label": "heroSecondaryTarget"
+    },
+    "galleryTitle": {
+      "max": 200,
+      "url": false,
+      "label": "Gallery heading"
+    },
+    "galleryDescription": {
+      "max": 1000,
+      "url": false,
+      "label": "Gallery description"
+    },
+    "sectionOrder": {
+      "max": 500,
+      "url": false,
+      "label": "Homepage section order (managed with drag and drop)"
+    }
+  },
+  "navigation": {
+    "Footer_1": {
+      "max": 10000,
+      "url": false,
+      "label": "Footer: T"
+    },
+    "Footer_2": {
+      "max": 10000,
+      "url": false,
+      "label": "Footer: TANVIR"
+    },
+    "Footer_3": {
+      "max": 10000,
+      "url": false,
+      "label": "Footer: ."
+    },
+    "Footer_4": {
+      "max": 10000,
+      "url": false,
+      "label": "Footer: Building automated sales systems that empower entrepreneurs to ga"
+    },
+    "Footer_5": {
+      "max": 10000,
+      "url": false,
+      "label": "Footer: Founder, "
+    },
+    "Footer_6": {
+      "max": 10000,
+      "url": false,
+      "label": "Footer: Sitemap"
+    },
+    "Footer_7": {
+      "max": 2048,
+      "url": true,
+      "label": "Footer: #about"
+    },
+    "Footer_8": {
+      "max": 10000,
+      "url": false,
+      "label": "Footer: About"
+    },
+    "Footer_9": {
+      "max": 2048,
+      "url": true,
+      "label": "Footer: #services"
+    },
+    "Footer_10": {
+      "max": 10000,
+      "url": false,
+      "label": "Footer: Services"
+    },
+    "Footer_11": {
+      "max": 2048,
+      "url": true,
+      "label": "Footer: #youtube"
+    },
+    "Footer_12": {
+      "max": 10000,
+      "url": false,
+      "label": "Footer: YouTube"
+    },
+    "Footer_13": {
+      "max": 2048,
+      "url": true,
+      "label": "Footer: #projects"
+    },
+    "Footer_14": {
+      "max": 10000,
+      "url": false,
+      "label": "Footer: Projects"
+    },
+    "Footer_15": {
+      "max": 10000,
+      "url": false,
+      "label": "Footer: Contact"
+    },
+    "Footer_16": {
+      "max": 10000,
+      "url": false,
+      "label": "Footer: +88"
+    },
+    "Footer_17": {
+      "max": 10000,
+      "url": false,
+      "label": "Footer: Dhaka, Bangladesh"
+    },
+    "Footer_18": {
+      "max": 10000,
+      "url": false,
+      "label": "Footer: © "
+    },
+    "Footer_19": {
+      "max": 10000,
+      "url": false,
+      "label": "Footer: . All rights reserved."
+    },
+    "Footer_20": {
+      "max": 10000,
+      "url": false,
+      "label": "Footer: Building systems, not just websites."
+    },
+    "Navbar_1": {
+      "max": 10000,
+      "url": false,
+      "label": "Navbar: T"
+    },
+    "Navbar_2": {
+      "max": 10000,
+      "url": false,
+      "label": "Navbar: TANVIR"
+    },
+    "Navbar_3": {
+      "max": 10000,
+      "url": false,
+      "label": "Navbar: ."
+    },
+    "Navbar_4": {
+      "max": 10000,
+      "url": false,
+      "label": "Navbar: Book Call"
+    },
+    "Navbar_5": {
+      "max": 10000,
+      "url": false,
+      "label": "Navbar: TANVIR"
+    },
+    "Navbar_6": {
+      "max": 10000,
+      "url": false,
+      "label": "Navbar: ."
+    },
+    "Navbar_7": {
+      "max": 10000,
+      "url": false,
+      "label": "Navbar: Book Call Now"
+    },
+    "menu": {
+      "max": 10000,
+      "url": false,
+      "label": "Header menu: one Label|URL per line. Reorder lines or remove to hide."
+    },
+    "footerMenu": {
+      "max": 10000,
+      "url": false,
+      "label": "Footer sitemap: one Label|URL per line; reorder or remove to hide"
+    },
+    "socialOrder": {
+      "max": 200,
+      "url": false,
+      "label": "Social icon order (comma-separated keys; omit to hide)"
+    }
+  },
+  "settings": {
+    "canonicalDomain": {
+      "max": 2048,
+      "url": true,
+      "label": "canonicalDomain"
+    },
+    "siteTitle": {
+      "max": 2048,
+      "url": false,
+      "label": "siteTitle"
+    },
+    "description": {
+      "max": 2048,
+      "url": false,
+      "label": "description"
+    },
+    "sharingImage": {
+      "max": 2048,
+      "url": true,
+      "label": "sharingImage"
+    },
+    "favicon": {
+      "max": 2048,
+      "url": true,
+      "label": "favicon"
+    },
+    "portrait": {
+      "max": 2048,
+      "url": true,
+      "label": "portrait"
+    },
+    "brandLogo": {
+      "max": 2048,
+      "url": true,
+      "label": "Optional brand logo image URL"
+    },
+    "heroPortrait": {
+      "max": 2048,
+      "url": true,
+      "image": true,
+      "label": "Hero image"
+    },
+    "journeyPortrait": {
+      "max": 2048,
+      "url": true,
+      "image": true,
+      "label": "My Journey image"
+    }
+  },
+  "brand": {
+    "name": {
+      "max": 10000,
+      "url": false,
+      "label": "name"
+    },
+    "phone": {
+      "max": 10000,
+      "url": false,
+      "label": "phone"
+    },
+    "whatsapp": {
+      "max": 10000,
+      "url": false,
+      "label": "whatsapp"
+    },
+    "email": {
+      "max": 10000,
+      "url": false,
+      "label": "email"
+    },
+    "founderOf": {
+      "max": 10000,
+      "url": false,
+      "label": "founderOf"
+    },
+    "founderUrl": {
+      "max": 10000,
+      "url": true,
+      "label": "founderUrl"
+    },
+    "aboutBio": {
+      "max": 10000,
+      "url": false,
+      "label": "aboutBio"
+    },
+    "social_youtube": {
+      "max": 10000,
+      "url": true,
+      "label": "social_youtube"
+    },
+    "social_linkedin": {
+      "max": 10000,
+      "url": true,
+      "label": "social_linkedin"
+    },
+    "social_facebook": {
+      "max": 10000,
+      "url": true,
+      "label": "social_facebook"
+    },
+    "social_twitter": {
+      "max": 10000,
+      "url": true,
+      "label": "social_twitter"
+    },
+    "social_github": {
+      "max": 10000,
+      "url": true,
+      "label": "social_github"
+    },
+    "social_instagram": {
+      "max": 10000,
+      "url": true,
+      "label": "social_instagram"
+    }
+  },
+  "appearance": {
+    "websitePrimaryColor": {
+      "max": 7,
+      "color": true,
+      "label": "Website primary color"
+    },
+    "adminPrimaryColor": {
+      "max": 7,
+      "color": true,
+      "label": "Admin accent color"
+    },
+    "websiteTheme": {
+      "max": 6,
+      "enum": [
+        "light",
+        "dark",
+        "system"
+      ],
+      "label": "Website mode"
+    },
+    "adminTheme": {
+      "max": 6,
+      "enum": [
+        "light",
+        "dark",
+        "system"
+      ],
+      "label": "Admin mode"
+    },
+    "websiteGreenColor": {
+      "max": 7,
+      "color": true,
+      "label": "Website deep green surfaces"
+    },
+    "websiteLimeColor": {
+      "max": 7,
+      "color": true,
+      "label": "Website lime accent"
+    },
+    "websiteLavenderColor": {
+      "max": 7,
+      "color": true,
+      "label": "Website lavender accent"
+    },
+    "websiteLoadingBar": {
+      "max": 3,
+      "enum": [
+        "on",
+        "off"
+      ],
+      "label": "Website loading line"
+    },
+    "websiteDesign": {
+      "label": "Portfolio design",
+      "enum": [
+        "editorial",
+        "studio",
+        "executive"
+      ],
+      "max": 9
+    },
+    "websiteDensity": {
+      "label": "Section spacing",
+      "enum": [
+        "comfortable",
+        "compact"
+      ],
+      "max": 11
+    },
+    "websiteCorners": {
+      "label": "Card corners",
+      "enum": [
+        "rounded",
+        "square"
+      ],
+      "max": 7
+    },
+    "websiteMotion": {
+      "label": "Website animation",
+      "enum": [
+        "subtle",
+        "off"
+      ],
+      "max": 6
+    },
+    "studioPortraitShape": {
+      "label": "Studio portrait shape",
+      "enum": [
+        "oval",
+        "square"
+      ],
+      "max": 6
+    },
+    "executivePortraitSide": {
+      "label": "Executive portrait position",
+      "enum": [
+        "left",
+        "right"
+      ],
+      "max": 5
+    }
+  },
+  "ui": {
+    "Hero_1": {
+      "max": 2000,
+      "url": false,
+      "label": "Hero: PERSONAL PORTFOLIO"
+    },
+    "Hero_2": {
+      "max": 2000,
+      "url": false,
+      "label": "Hero: eCommerce"
+    },
+    "Hero_3": {
+      "max": 2000,
+      "url": false,
+      "label": "Hero: Customer psychology"
+    },
+    "Hero_4": {
+      "max": 2000,
+      "url": false,
+      "label": "Hero: Automation & systems"
+    },
+    "ServicesSection_1": {
+      "max": 2000,
+      "url": false,
+      "label": "ServicesSection: WHAT I DO"
+    },
+    "ResourcesSection_1": {
+      "max": 2000,
+      "url": false,
+      "label": "ResourcesSection: Download unavailable"
+    },
+    "TestimonialsSection_1": {
+      "max": 2000,
+      "url": false,
+      "label": "TestimonialsSection: IN THEIR WORDS"
+    },
+    "YouTubeSection_1": {
+      "max": 2000,
+      "url": false,
+      "label": "YouTubeSection: INSIGHTS & IDEAS"
+    },
+    "YouTubeSection_2": {
+      "max": 2000,
+      "url": false,
+      "label": "YouTubeSection: Video link unavailable"
+    },
+    "BookingSection_1": {
+      "max": 2000,
+      "url": false,
+      "label": "BookingSection: LET’S BUILD SOMETHING BETTER"
+    },
+    "DetailPage_1": {
+      "max": 2000,
+      "url": false,
+      "label": "DetailPage: ← Back to Home"
+    },
+    "DetailPage_2": {
+      "max": 2000,
+      "url": false,
+      "label": "DetailPage: Blog"
+    },
+    "DetailPage_3": {
+      "max": 2000,
+      "url": false,
+      "label": "DetailPage: No articles published yet. Please check back soon."
+    },
+    "DetailPage_4": {
+      "max": 2000,
+      "url": false,
+      "label": "DetailPage: Technologies:"
+    },
+    "DetailPage_5": {
+      "max": 2000,
+      "url": false,
+      "label": "DetailPage: Get on WhatsApp ↗"
+    },
+    "DetailPage_6": {
+      "max": 2000,
+      "url": false,
+      "label": "DetailPage: Private resource. Contact the owner for access."
+    },
+    "DetailPage_7": {
+      "max": 2000,
+      "url": false,
+      "label": "DetailPage: Download resource ↓"
+    },
+    "DetailPage_8": {
+      "max": 2000,
+      "url": false,
+      "label": "DetailPage: Download unavailable"
+    },
+    "DetailPage_9": {
+      "max": 2000,
+      "url": false,
+      "label": "DetailPage: Live preview ↗"
+    },
+    "DetailPage_10": {
+      "max": 2000,
+      "url": false,
+      "label": "DetailPage: Page not found"
+    },
+    "RequestForm_1": {
+      "max": 2000,
+      "url": false,
+      "label": "RequestForm: I’d like to"
+    },
+    "RequestForm_2": {
+      "max": 2000,
+      "url": false,
+      "label": "RequestForm: Service interest"
+    },
+    "RequestForm_3": {
+      "max": 2000,
+      "url": false,
+      "label": "RequestForm: Message"
+    },
+    "RequestForm_4": {
+      "max": 2000,
+      "url": false,
+      "label": "RequestForm: Website"
+    },
+    "bookingHeading": {
+      "max": 2000,
+      "url": false,
+      "label": "bookingHeading"
+    },
+    "contactHeading": {
+      "max": 2000,
+      "url": false,
+      "label": "contactHeading"
+    },
+    "nameLabel": {
+      "max": 2000,
+      "url": false,
+      "label": "nameLabel"
+    },
+    "emailLabel": {
+      "max": 2000,
+      "url": false,
+      "label": "emailLabel"
+    },
+    "phoneLabel": {
+      "max": 2000,
+      "url": false,
+      "label": "phoneLabel"
+    },
+    "sendBooking": {
+      "max": 2000,
+      "url": false,
+      "label": "sendBooking"
+    },
+    "sendContact": {
+      "max": 2000,
+      "url": false,
+      "label": "sendContact"
+    },
+    "freeLabel": {
+      "max": 2000,
+      "url": false,
+      "label": "freeLabel"
+    },
+    "paidLabel": {
+      "max": 2000,
+      "url": false,
+      "label": "paidLabel"
+    },
+    "previewUnavailable": {
+      "max": 2000,
+      "url": false,
+      "label": "previewUnavailable"
+    },
+    "dateLabel": {
+      "max": 2000,
+      "url": false,
+      "label": "dateLabel"
+    },
+    "datePlaceholder": {
+      "max": 2000,
+      "url": false,
+      "label": "datePlaceholder"
+    },
+    "timezoneLabel": {
+      "max": 2000,
+      "url": false,
+      "label": "timezoneLabel"
+    },
+    "bookingNotice": {
+      "max": 2000,
+      "url": false,
+      "label": "bookingNotice"
+    }
+  },
+  "integrations": {
+    "facebookEnabled": {
+      "max": 3,
+      "enum": [
+        "on",
+        "off"
+      ],
+      "label": "Enable Meta / Facebook Pixel ID"
+    },
+    "facebookId": {
+      "max": 40,
+      "label": "Meta / Facebook Pixel ID"
+    },
+    "gtmEnabled": {
+      "max": 3,
+      "enum": [
+        "on",
+        "off"
+      ],
+      "label": "Enable Google Tag Manager container ID"
+    },
+    "gtmId": {
+      "max": 40,
+      "label": "Google Tag Manager container ID"
+    },
+    "tiktokEnabled": {
+      "max": 3,
+      "enum": [
+        "on",
+        "off"
+      ],
+      "label": "Enable TikTok Pixel ID"
+    },
+    "tiktokId": {
+      "max": 40,
+      "label": "TikTok Pixel ID"
+    }
+  },
+  "customCode": {
+    "enabled": {
+      "max": 3,
+      "enum": [
+        "on",
+        "off"
+      ],
+      "label": "Enable custom code"
+    },
+    "headerHtml": {
+      "max": 20000,
+      "label": "Header HTML"
+    },
+    "headerCss": {
+      "max": 20000,
+      "label": "Header CSS"
+    },
+    "headerJs": {
+      "max": 20000,
+      "label": "Header JS"
+    },
+    "bodyHtml": {
+      "max": 20000,
+      "label": "Body HTML"
+    },
+    "bodyCss": {
+      "max": 20000,
+      "label": "Body CSS"
+    },
+    "bodyJs": {
+      "max": 20000,
+      "label": "Body JS"
+    }
+  },
+  "logos": {
+    "headerMode": {
+      "max": 5,
+      "enum": [
+        "text",
+        "image"
+      ],
+      "label": "Header logo type"
+    },
+    "headerImage": {
+      "max": 2048,
+      "url": true,
+      "image": true,
+      "label": "Header logo image"
+    },
+    "headerAlt": {
+      "max": 200,
+      "label": "Header logo alternative text"
+    },
+    "footerMode": {
+      "max": 5,
+      "enum": [
+        "text",
+        "image"
+      ],
+      "label": "Footer logo type"
+    },
+    "footerImage": {
+      "max": 2048,
+      "url": true,
+      "image": true,
+      "label": "Footer logo image"
+    },
+    "footerAlt": {
+      "max": 200,
+      "label": "Footer logo alternative text"
+    }
+  }
+}

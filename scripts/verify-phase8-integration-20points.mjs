@@ -2,8 +2,8 @@ import assert from "node:assert/strict";
 import { execSync } from "node:child_process";
 import { randomUUID } from "node:crypto";
 
-const NEXT_PORT = 3002;
-const BASE_URL = `http://localhost:${NEXT_PORT}`;
+const PORT = process.env.PORT || 8000;
+const BASE_URL = process.env.BASE_URL || `http://127.0.0.1:${PORT}`;
 
 async function run20PointTestSuite() {
   console.log("===================================================================");

@@ -1,523 +1,226 @@
-# Migration Plan: Tanvir Portfolio CMS
-## From Node.js / Express 5 / Vite 6 to Laravel 12 / Next.js / MySQL
+# Comprehensive Migration Plan: Tanvir Portfolio CMS
+## From React + Express SPA to Monolithic Laravel 12 + Inertia.js + React
 
-**Target Stack:**
-- **Backend:** Laravel 12 (PHP 8.3+)
-- **Frontend:** Next.js (App Router, React 19, TypeScript)
-- **Database:** MySQL 8.0+ / MariaDB 10.4+
-- **Styling & UI:** Tailwind CSS, Framer Motion, Lucide Icons
-
----
-
-## 1. Executive Summary & Migration Objectives
-
-The primary goal of this migration is to transition the **Md Tanvir Hossain Portfolio CMS** from an Express 5 + Vite Single Page Application (SPA) architecture into a modern, decoupled, enterprise-grade web application powered by **Laravel 12** on the backend and **Next.js (App Router)** on the frontend.
-
-### Core Non-Negotiable Guarantees
-1. **Zero Data Loss**: 100% preservation of all existing content, settings, users, media BLOBs, leads, and historical migrations.
-2. **Zero Security Regression**: Full retention of origin verification, double-submit CSRF protection, rate limiting, bcrypt password compatibility, HTML sanitization, and dynamic Content Security Policy (CSP).
-3. **100% Visual & Interaction Parity**: Exact preservation of the 3 design themes (*Editorial*, *Studio*, *Executive*), Framer Motion transitions, responsive layouts, and Lucide icons.
-4. **Complete Feature Parity**: Retention of in-place visual live editing (`?edit=1`), drag-and-drop section ordering, the Kanban LeadBoard, Contact Inbox, and binary media asset streaming.
-5. **SEO Enhancement**: Leveraging Next.js Server Components and dynamic SSR metadata to achieve superior search engine indexing over the legacy client-side SPA model.
+- **Target Backend Framework:** Laravel 12 (PHP 8.3+)
+- **Target Frontend Bridge:** Inertia.js 2.x (React 19, TypeScript, Vite)
+- **Target Styling & Animation:** Tailwind CSS 3.4+, Framer Motion 12+, Lucide React Icons
+- **Target Database:** MySQL 8+ / compatible MariaDB (Database: `tanvir_portfolio_local`)
+- **Primary Design Principle:** 100% Visual, Layout, and Feature Preservation — Zero Redesign
 
 ---
 
-## 2. Current vs. Target Architecture
+## 1. Executive Summary & Architecture Paradigm
+
+This migration transitions the **Md Tanvir Hossain Portfolio CMS** from an Express 5 + Vite Single Page Application (SPA) architecture into a unified, monolithic **Laravel 12 + Inertia.js + React** application.
 
 ```mermaid
 flowchart TD
-    subgraph CurrentArchitecture["Current Architecture (Node/Express + Vite)"]
-        direction TB
-        ClientOld["Browser (Vite SPA React 19)"]
-        ServerOld["Express 5 Server (Port 3001)"]
-        DBOld[("MySQL / MariaDB")]
-        ClientOld <-->|Dev Proxy / Static Serve| ServerOld
-        ServerOld <-->|mysql2 Pool| DBOld
+    subgraph Browser["User Browser / Client"]
+        InertiaClient["Inertia.js React App (Client SPA Transitions)"]
+        FramerUI["Framer Motion + Tailwind CSS + Lucide Icons"]
+        InPlaceEditor["In-Place Visual Editor (?edit=1)"]
     end
 
-    subgraph TargetArchitecture["Target Architecture (Decoupled Laravel 12 + Next.js)"]
-        direction TB
-        ClientNew["Next.js App Router (Port 3000)<br>React Server Components + Client Islands"]
-        ServerNew["Laravel 12 API (PHP 8.3+) (Port 8000)<br>Sanctum Stateful Auth + Form Requests"]
-        DBNew[("MySQL 8+ / MariaDB 10.4+")]
-        ClientNew <-->|BFF Route Handlers / Direct REST| ServerNew
-        ServerNew <-->|Eloquent ORM / PDO Pool| DBNew
+    subgraph LaravelApp["Unified Laravel 12 Monolith (:8000 / Apache)"]
+        WebRoutes["routes/web.php (Navigation & Actions)"]
+        InertiaMiddleware["HandleInertiaRequests Middleware (Shared Props)"]
+        Controllers["Controllers (Public, Auth, Admin, CRM, Media)"]
+        FormRequests["Form Request Validation & Sanitizers"]
+        Eloquent["Eloquent ORM & Database Transactions"]
+        BladeShell["resources/views/app.blade.php (@inertiaHead / @inertia)"]
     end
+
+    subgraph MySQLDB["MySQL 8+ Database (tanvir_portfolio_local)"]
+        DomainTables["8 Domain Tables (users, content, settings, requests, etc.)"]
+        BlobStore["media.bytes (MEDIUMBLOB Storage)"]
+        SessionStore["laravel_sessions (Persistent Session Store)"]
+    end
+
+    InertiaClient <-->|Inertia Router Visit / Forms / CSRF| WebRoutes
+    WebRoutes --> InertiaMiddleware
+    InertiaMiddleware --> Controllers
+    Controllers --> FormRequests
+    FormRequests --> Eloquent
+    Eloquent <--> DomainTables
+    Eloquent <--> BlobStore
+    Eloquent <--> SessionStore
+    Controllers -->|Inertia::render('Page', $props)| BladeShell
+    BladeShell -->|Initial HTML + Page Props| InertiaClient
 ```
 
-### Architectural Comparison Matrix
-
-| Aspect | Current Architecture | Target Architecture | Migration Strategy |
-| :--- | :--- | :--- | :--- |
-| **Backend Runtime** | Node.js 22+ (ES Modules) | PHP 8.3+ / 8.4 CLI & FPM | Laravel 12 standard framework structure |
-| **HTTP Framework** | Express 5.3 (`server/app.mjs`) | Laravel 12 (`routes/api.php`) | Route groups, Form Requests, API Resources |
-| **Database Access** | Raw SQL queries with `mysql2` | Laravel Eloquent ORM + Query Builder | Models with custom attribute casting & transactions |
-| **Frontend Runtime** | Vite 6 Client SPA (`index.html`) | Next.js 15+ (App Router, Turbopack) | Hybrid: Server Components (SSR/SEO) + Client Components (Interactions) |
-| **Routing** | Custom browser history popstate | Next.js App Router (`app/` directory) | Dynamic filesystem routes (`[collection]/[slug]`, `admin/`, etc.) |
-| **Authentication** | `express-session` + `MysqlStore` | Laravel Sanctum (Stateful Cookie Sessions) | Session cookie `portfolio_session` matching existing user hashes |
-| **Media Pipeline** | Express streaming from `MEDIUMBLOB` | Laravel Controller streaming from DB | Binary streaming response with `ETag` and immutable headers |
-| **Visual Editor** | In-place DOM binding (`EditBinding.tsx`) | Next.js Client Editor Context + Server Sync | Iframe `/` preview with postMessage / optimistic draft state |
+### Key Architectural Shifts
+1. **Elimination of Multi-Server Overhead:** No separate Express backend daemon (port 3001) and no separate Next.js server (port 3002). The entire application runs as a single, production-ready Laravel 12 application on port 8000 or under Apache/Nginx.
+2. **Server-Driven React via Inertia.js:** Instead of client-side `useEffect` data fetching and loading spinners, Laravel controllers pass strongly-typed props directly into React page components (`Inertia::render('Home', $props)`).
+3. **Instantaneous SSR Page Shell with Client-Side Routing:** Inertia preserves SPA-speed page transitions through client-side pushState navigation (`<Link href="...">`), while ensuring SEO spiders receive fully rendered metadata, OpenGraph tags, and canonical headers.
+4. **Native Session & Security Integration:** Replaces ad-hoc Express session cookies with Laravel's database-backed session driver, native double-submit CSRF tokens, strict rate limiting, and dynamic CSP.
+5. **Exact Preservation of Design & Interactions:** Reuses all existing React components (`components/`), Framer Motion animations, Lucide icons, Tailwind tokens, and the in-place visual editor without altering a single visual pixel.
 
 ---
 
-## 3. Existing Feature Inventory
+## 2. Existing Feature Inventory & Component Audit
 
-Every capability in the current codebase has been mapped to its target implementation:
-
-### 3.1 Public Website Features
-- **Dynamic Homepage**: Multi-section layout with order determined by `settings.homepage.sectionOrder` and `sections`.
-- **Homepage Sections**:
-  - `hero`: Dual title, badge, bio, stats, CTA buttons, hero portrait.
-  - `trust`: Client logos, proof metrics, trust counters.
-  - `about`: High-level philosophy, core competencies.
-  - `journey`: Deep story, milestones, link to full `/about` page.
-  - `services`: Service cards, dynamic Lucide icon rendering, feature checklists, direct booking CTA.
-  - `videos`: YouTube embed cards with duration badges and video IDs.
-  - `projects`: Portfolio cards, technology pills, client details, live demo links.
-  - `deals`: Discount cards with countdown timers, coupon copy buttons, affiliate links.
-  - `gallery`: Visual masonry of events, workshops, and speaking engagements.
-  - `resources`: Curated download cards with free vs. paid badges, WhatsApp integration.
-  - `testimonials`: Client feedback cards, star ratings, avatar images, video reviews.
-  - `booking`: Embedded interactive appointment/strategy call request form.
-  - `closingCta`: Bold conversion banner with primary contact trigger.
-  - `footer`: Dynamic sitemap links, social media icon row, copyright.
-  - `floatingActions`: Sticky WhatsApp chat trigger and quick booking shortcuts.
-- **Dedicated Sub-pages**:
-  - `/about`: Detailed career narrative and philosophy.
-  - `/services`: Comprehensive service catalog.
-  - `/projects`: Complete portfolio archive with category filters.
-  - `/deals`: Full deals and tool recommendation directory.
-  - `/resources`: Full downloadable resource library.
-  - `/blog`: Article listing and reading views.
-  - `/[collection]/[slug]`: Server-rendered dynamic detail view for any published record.
-- **Public Integrations**:
-  - Facebook (Meta) Pixel tracking (`PageView`).
-  - Google Tag Manager (GTM) container script.
-  - TikTok Analytics Pixel.
-  - Custom Header & Body HTML/CSS/JS snippet injection with dynamic CSP relaxation.
-
-### 3.2 Visual In-Place Editor (`?edit=1`)
-- **Direct Highlight & Edit**: Click-to-edit text fields and media pickers directly over the real page markup.
-- **Draft Buffer**: Changes held in browser state with live preview; discard or publish all in one action.
-- **Batch Atomic Save**: Up to 500 changes sent in a single `PATCH /api/admin/editor` transaction.
-- **Optimistic Concurrency**: Row-level version matching prevents overwriting simultaneous edits.
-
-### 3.3 Admin Workspace (`/admin`)
-- **Dashboard**: Metric cards (content item counts by status, leads by status, 8 most recent leads).
-- **Collection Management**: Full CRUD, pagination, search, filter (draft/published/deleted), and soft-delete/restore for 8 collections: `services`, `projects`, `blog`, `resources`, `videos`, `deals`, `testimonials`, `gallery`.
-- **Media Library**:
-  - Binary file uploads (PNG, JPEG, WebP, PDF up to 5 MB).
-  - Search, alt text editing, filename renaming.
-  - Binary file replacement with optimistic version checks.
-  - Usage tracker inspecting both `content_media` and `settings_media`.
-- **Lead Board (CRM)**:
-  - Kanban board with 5 pipeline stages (`new`, `contacted`, `scheduled`, `completed`, `cancelled`).
-  - Drag-and-drop status transitions with version-locking.
-  - Detailed modal view: lead notes, timezone-aware timestamp, contact info.
-- **Contact Inbox**: Dedicated chronological message manager for general inquiries.
-- **Appearance & Theme Settings**:
-  - Switcher between 3 core themes (*Editorial*, *Studio*, *Executive*).
-  - Palette customizer (Primary, Green, Lime, Lavender, Background, Surface, Border, Text).
-  - Dark/Light mode preference toggling.
-  - Live desktop/mobile responsive preview iframe (`?preview=design`).
-- **Section Order & Visibility**: Drag-and-drop homepage section order customizer (`SectionToggles.tsx`).
-- **Site Extensions & Logos**: Form for GTM/Pixel IDs, custom code blocks, text vs. image brand logos.
-- **Account & Security**: Password change with current-password verification and session revocation.
+| Feature Module | Original Implementation | Target Laravel + Inertia Implementation | Status |
+| :--- | :--- | :--- | :---: |
+| **Homepage Visuals** | `Hero.tsx`, `TrustStrip.tsx` | `resources/js/Components/Hero.tsx`, `TrustStrip.tsx` | Preserved |
+| **Section Ordering** | `homepage-sections.json` / `settings.homepage.sections` | Stored in `settings` table, ordered dynamically in `Home.tsx` | Preserved |
+| **Theme System** | `theme.ts`, `design-themes.ts`, `design-themes.css` | 3 Themes (Editorial, Studio, Executive) applied via CSS variables | Preserved |
+| **Color Customization** | `applyTheme()`, `websitePrimaryColor`, WCAG contrast | Server-calculated WCAG contrast + Inertia shared props | Preserved |
+| **Visual Editor** | `VisualEditor.tsx`, `EditBinding.tsx`, `?edit=1` | Inertia conditional wrapper on `Home.tsx` with batch transaction saves | Preserved |
+| **Content CRUD** | 8 Collections: services, projects, blog, resources, etc. | `Admin/ContentController.php` + `resources/js/Pages/Admin/Content.tsx` | Preserved |
+| **Media Library** | `media` table, `MEDIUMBLOB` bytes, `AdminMediaLibrary.tsx` | `MediaController.php` with `finfo` byte check + `Admin/Media.tsx` | Preserved |
+| **CRM Kanban Pipeline** | `LeadBoard.tsx`, 5 stages, optimistic version locks | `Admin/LeadController.php` + `resources/js/Pages/Admin/Leads.tsx` | Preserved |
+| **Contact Inbox** | `ContactInbox.tsx`, threaded views | `Admin/LeadController.php` + `resources/js/Pages/Admin/Inbox.tsx` | Preserved |
+| **Public Lead Forms** | `RequestForm.tsx`, booking datetime picker, contact form | `Public/RequestController.php` with honeypot + Inertia form | Preserved |
+| **Site Extensions** | Meta Pixel, Google Tag Manager, TikTok Pixel, custom HTML | `public-integrations.ts` + Dynamic CSP headers | Preserved |
+| **SEO & Sitemaps** | Dynamic `robots.txt`, dynamic `sitemap.xml` | `Public/SeoController.php` generating XML/plain text | Preserved |
 
 ---
 
-## 4. Database Migration Mapping
+## 3. Database Schema & Migration Mapping
 
-### 4.1 Table Schema & Laravel Migration Definitions
+The existing 13 append-only migrations have already been verified for 100% data preservation and byte-for-byte fidelity:
 
-The existing MySQL 8 / MariaDB schema contains 9 tables. In Laravel 12, standard migrations will recreate these exact structures with matching types, character sets, and collation (`utf8mb4_unicode_ci`).
-
-```mermaid
-erDiagram
-    users ||--o{ sessions : owns
-    content ||--o{ content_media : references
-    media ||--o{ content_media : attached_to
-    settings ||--o{ settings_media : references
-    media ||--o{ settings_media : attached_to
-
-    users {
-        char(36) id PK
-        varchar(254) email UK
-        varchar(255) password_hash
-        timestamp created_at
-    }
-    content {
-        char(36) id PK
-        varchar(32) collection
-        varchar(180) slug
-        varchar(255) title
-        text summary
-        mediumtext body
-        varchar(16) status
-        boolean featured
-        int sort_order
-        json fields
-        varchar(255) seo_title
-        varchar(500) seo_description
-        datetime published_at
-        datetime deleted_at
-        int version
-        timestamp created_at
-        timestamp updated_at
-    }
-    media {
-        char(36) id PK
-        varchar(255) name
-        varchar(100) mime
-        varchar(500) alt
-        int size
-        mediumblob bytes
-        int version
-        timestamp created_at
-    }
-    settings {
-        varchar(32) id PK
-        json value
-        int version
-        timestamp updated_at
-    }
-    requests {
-        char(36) id PK
-        varchar(16) kind
-        varchar(150) name
-        varchar(254) email
-        varchar(50) phone
-        varchar(255) service
-        text message
-        datetime requested_at
-        varchar(100) timezone
-        varchar(16) status
-        text notes
-        char(36) dedup_key UK
-        int version
-        timestamp created_at
-        timestamp updated_at
-    }
-```
-
-#### Mapping Table: Existing DDL vs. Laravel 12 Schema
-
-| Existing Table | Existing Column Specifics | Laravel 12 Migration Blueprint |
+| SQL Migration | Target Laravel Migration File | Tables & Columns Affected |
 | :--- | :--- | :--- |
-| **`users`** | `id CHAR(36) PRIMARY KEY`<br>`email VARCHAR(254) UNIQUE`<br>`password_hash VARCHAR(255)` | `$table->uuid('id')->primary();`<br>`$table->string('email', 254)->unique();`<br>`$table->string('password', 255);`<br>`$table->timestamp('created_at')->useCurrent();` |
-| **`sessions`** | `sid VARCHAR(128) PRIMARY KEY`<br>`data MEDIUMTEXT`<br>`expires_at BIGINT` | Use Laravel 12 native database session driver or custom schema matching `portfolio_session`. |
-| **`media`** | `id CHAR(36) PRIMARY KEY`<br>`name VARCHAR(255)`<br>`mime VARCHAR(100)`<br>`alt VARCHAR(500)`<br>`size INT`<br>`bytes MEDIUMBLOB`<br>`version INT DEFAULT 1` | `$table->uuid('id')->primary();`<br>`$table->string('name', 255);`<br>`$table->string('mime', 100);`<br>`$table->string('alt', 500)->default('');`<br>`$table->unsignedInteger('size');`<br>`$table->binary('bytes', MediumBlob);`<br>`$table->unsignedInteger('version')->default(1);` |
-| **`content`** | `id CHAR(36) PRIMARY KEY`<br>`collection VARCHAR(32)`<br>`slug VARCHAR(180)`<br>`fields JSON`<br>`status VARCHAR(16) DEFAULT 'draft'`<br>`version INT DEFAULT 1` | `$table->uuid('id')->primary();`<br>`$table->string('collection', 32);`<br>`$table->string('slug', 180);`<br>`$table->json('fields');`<br>`$table->unique(['collection', 'slug']);`<br>`$table->index(['collection', 'status', 'deleted_at', 'sort_order']);` |
-| **`content_media`** | `content_id CHAR(36)`<br>`media_id CHAR(36)`<br>`PRIMARY KEY (content_id, media_id)` | `$table->uuid('content_id');`<br>`$table->uuid('media_id');`<br>`$table->primary(['content_id', 'media_id']);`<br>`$table->foreign('content_id')->references('id')->on('content')->cascadeOnDelete();`<br>`$table->foreign('media_id')->references('id')->on('media')->restrictOnDelete();` |
-| **`settings`** | `id VARCHAR(32) PRIMARY KEY`<br>`value JSON`<br>`version INT DEFAULT 1` | `$table->string('id', 32)->primary();`<br>`$table->json('value');`<br>`$table->unsignedInteger('version')->default(1);`<br>`$table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();` |
-| **`settings_media`**| `settings_id VARCHAR(32)`<br>`media_id CHAR(36)`<br>`PRIMARY KEY (settings_id, media_id)` | `$table->string('settings_id', 32);`<br>`$table->uuid('media_id');`<br>`$table->primary(['settings_id', 'media_id']);`<br>`$table->foreign('settings_id')->references('id')->on('settings')->cascadeOnDelete();`<br>`$table->foreign('media_id')->references('id')->on('media')->restrictOnDelete();` |
-| **`requests`** | `id CHAR(36) PRIMARY KEY`<br>`dedup_key CHAR(36) UNIQUE`<br>`status VARCHAR(16) DEFAULT 'new'`<br>`version INT DEFAULT 1` | `$table->uuid('id')->primary();`<br>`$table->string('kind', 16);`<br>`$table->uuid('dedup_key')->unique();`<br>`$table->unsignedInteger('version')->default(1);`<br>`$table->index(['kind', 'status', 'created_at']);` |
+| `001_initial.sql` | `2026_11_16_000001_create_initial_schema.php` | `users`, `sessions`, `media`, `content`, `content_media`, `settings`, `settings_media`, `requests` |
+| `002_homepage_images.sql` | `2026_11_16_000002_migrate_homepage_images.php` | Seeds initial media assets into `media` and attaches to `settings` |
+| `003_appearance.sql` | `2026_11_16_000003_seed_appearance_settings.php` | Seeds `settings` row `id='appearance'` with default font, spacing, radius |
+| `004_gallery_visibility.sql` | `2026_11_16_000004_update_gallery_visibility.php` | Updates `navigation` setting with gallery visibility flags |
+| `005_website_palette.sql` | `2026_11_16_000005_add_website_palette.php` | Adds `websitePrimaryColor` and palette definitions to `appearance` |
+| `006_home_menu.sql` | `2026_11_16_000006_add_home_menu_item.php` | Inserts `home` into navigation menu structure |
+| `007_loading_line.sql` | `2026_11_16_000007_add_loading_line_setting.php` | Adds progress indicator configuration to `appearance` |
+| `008_design_themes.sql` | `2026_11_16_000008_add_design_themes_settings.php` | Adds `editorial`, `studio`, and `executive` theme definitions |
+| `009_editor_labels.sql` | `2026_11_16_000009_seed_editor_ui_labels.php` | Seeds `settings` row `id='ui'` with editable button and section strings |
+| `010_editor_form_labels.sql` | `2026_11_16_000010_update_editor_form_labels.php` | Expands `ui` setting with form field labels, placeholders, and helper texts |
+| `011_section_order.sql` | `2026_11_16_000011_add_section_order_setting.php` | Adds `sections` comma-separated ordering string to `homepage` setting |
+| `012_media_lead_versions.sql` | `2026_11_16_000012_add_media_and_lead_versions.php` | Adds `version` counter column (INT DEFAULT 1) to `media` and `requests` |
+| `013_integrations_logos.sql` | `2026_11_16_000013_seed_integrations_and_logos.php` | Seeds `integrations` and `logos` settings |
+| *Session Driver* | `2026_11_16_000014_create_laravel_sessions_table.php` | `laravel_sessions` table for persistent database sessions |
+
+### Safety Invariants
+- **NEVER** run `migrate:fresh` or `db:wipe`.
+- Backups maintained at `.local/backups/pre_phase3_clean.sql`.
+- Binary preservation verified with SHA-256 digests on `media.bytes`.
 
 ---
 
-## 5. Laravel 12 Model & Controller Mapping
-
-### 5.1 Eloquent Models
-1. **`User` (`app/Models/User.php`)**:
-   - Uses `HasUuids` trait.
-   - Disables auto-incrementing; sets `$keyType = 'string'`.
-   - Hidden: `password` (mapped to `password_hash`).
-   - Custom authentication provider mapping `getAuthPassword()` to `password_hash`.
-2. **`Content` (`app/Models/Content.php`)**:
-   - Uses `HasUuids` trait.
-   - Casts: `'fields' => 'array'`, `'featured' => 'boolean'`, `'sort_order' => 'integer'`, `'version' => 'integer'`, `'published_at' => 'datetime'`, `'deleted_at' => 'datetime'`.
-   - Scope: `scopePublished($query)` filtering `status = 'published'`, `deleted_at IS NULL`, and `published_at <= now()`.
-   - Relationships: `belongsToMany(Media::class, 'content_media', 'content_id', 'media_id')`.
-3. **`Media` (`app/Models/Media.php`)**:
-   - Uses `HasUuids` trait.
-   - Casts: `'size' => 'integer'`, `'version' => 'integer'`.
-   - Relationships:
-     - `belongsToMany(Content::class, 'content_media', 'media_id', 'content_id')`
-     - `belongsToMany(Setting::class, 'settings_media', 'media_id', 'settings_id')`
-4. **`Setting` (`app/Models/Setting.php`)**:
-   - Primary key `$primaryKey = 'id'`, `$keyType = 'string'`, `$incrementing = false`.
-   - Casts: `'value' => 'array'`, `'version' => 'integer'`.
-   - Relationships: `belongsToMany(Media::class, 'settings_media', 'settings_id', 'media_id')`.
-5. **`LeadRequest` (`app/Models/LeadRequest.php`)**:
-   - Table: `requests`.
-   - Uses `HasUuids` trait.
-   - Casts: `'requested_at' => 'datetime'`, `'version' => 'integer'`.
-
-### 5.2 Laravel Controllers & Services
+## 4. Controller, Model & Service Architecture
 
 ```
 app/
+├── Console/
+│   └── Commands/
+│       └── CreateOwnerCommand.php       (php artisan admin:create-owner)
 ├── Http/
 │   ├── Controllers/
-│   │   ├── Api/
-│   │   │   ├── AuthController.php          # Session check, login, logout, password change
-│   │   │   ├── PublicController.php        # Site bootstrap (/site), appearance, detail
-│   │   │   ├── RequestController.php       # Lead & contact submission (rate-limited)
-│   │   │   ├── MediaController.php         # Public & admin media streaming
-│   │   │   ├── Admin/
-│   │   │   │   ├── DashboardController.php # Aggregate dashboard metrics
-│   │   │   │   ├── ContentController.php   # Collection CRUD & soft-delete
-│   │   │   │   ├── SettingController.php   # Module settings update & validation
-│   │   │   │   ├── LeadController.php      # CRM lead management & Kanban status updates
-│   │   │   │   ├── MediaAdminController.php# Upload, update, delete, usage
-│   │   │   │   └── EditorController.php    # Batch in-place visual editing PATCH
-│   ├── Requests/                           # Form Requests replacing Zod schemas
-│   │   ├── LoginRequest.php
-│   │   ├── ContentStoreRequest.php
-│   │   ├── SettingUpdateRequest.php
-│   │   ├── LeadSubmissionRequest.php
-│   │   └── EditorBatchRequest.php
+│   │   ├── Auth/
+│   │   │   └── AuthController.php       (Session check, login, logout, password change)
+│   │   ├── Public/
+│   │   │   ├── HomeController.php       (Inertia render 'Home' with content & settings)
+│   │   │   ├── PageController.php       (Inertia render 'About', 'Services', 'Projects', etc.)
+│   │   │   ├── DetailController.php     (Inertia render 'Detail' for /{collection}/{slug})
+│   │   │   ├── RequestController.php    (Public lead submission with honeypot & throttle)
+│   │   │   ├── MediaController.php      (Public binary streaming with privacy checks)
+│   │   │   └── SeoController.php        (Dynamic robots.txt and sitemap.xml)
+│   │   └── Admin/
+│   │       ├── DashboardController.php  (Admin stats & Inertia 'Admin/Dashboard')
+│   │       ├── ContentController.php    (Content CRUD with optimistic locking & media sync)
+│   │       ├── SettingController.php    (Settings module update with validation)
+│   │       ├── EditorController.php     (Batch visual editor transactions & rollback)
+│   │       ├── LeadController.php       (Lead Kanban updates & Contact Inbox)
+│   │       └── MediaAdminController.php (Media uploads, finfo byte checks, replacements)
 │   └── Middleware/
-│       ├── VerifyAppOrigin.php             # Strict Origin === APP_ORIGIN validation
-│       ├── DynamicContentSecurityPolicy.php# Evaluates settings for Pixel/GTM CSP
-│       └── EnsureValidCsrfToken.php        # Double-submit cookie verification
+│       ├── HandleInertiaRequests.php    (Shared props: auth.user, settings, themes, flash, csrf)
+│       ├── AuthenticateAdmin.php        (Strict admin session guard)
+│       ├── EnsureCsrfToken.php          (Double-submit CSRF protection)
+│       ├── VerifyAppOrigin.php          (Origin matching for CSRF/CORS safety)
+│       └── ApiSecurityHeaders.php       (CSP, nosniff, frame denial on admin)
+├── Models/
+│   ├── User.php                         (Bcrypt 12 with legacy $2b$ support)
+│   ├── Content.php                      (JSON casting for 'fields', published scopes)
+│   ├── Setting.php                      (JSON casting for 'value', optimistic versioning)
+│   ├── Media.php                        (MEDIUMBLOB bytes, version counter)
+│   ├── LeadRequest.php                  (UUID keys, status state machine)
+│   ├── ContentMedia.php                 (Pivot relationship)
+│   └── SettingMedia.php                 (Pivot relationship)
 └── Services/
-    ├── ContentSanitizer.php                # HTML cleaning (HTMLPurifier or Mews/Purifier)
-    ├── MediaReferenceSync.php              # Regex & JSON walker syncing content_media
-    └── SettingsDefinitionService.php       # Loads settings-definition.json allowlist
+    ├── ContentSanitizer.php             (HTMLPurifier rich-text security)
+    ├── MediaReferenceService.php        (Content-media sync on save)
+    └── UrlValidator.php                 (URL sanitization)
 ```
 
 ---
 
-## 6. Complete API Endpoint Mapping
+## 5. React & Inertia Page Structure
 
-All API endpoints will preserve their exact HTTP methods, URI signatures, and JSON response bodies so the frontend requires zero contract alterations.
+Inertia page components will be organized inside `resources/js/Pages/`:
 
-| Method | Endpoint | Existing Express Handler | Laravel 12 Controller Action | Auth / Middleware |
-| :--- | :--- | :--- | :--- | :--- |
-| `GET` | `/api/health` | `app.get("/api/health")` | `PublicController@health` | Public |
-| `GET` | `/api/auth/session` | `app.get("/api/auth/session")` | `AuthController@session` | Public (generates CSRF) |
-| `POST` | `/api/auth/login` | `app.post("/api/auth/login")` | `AuthController@login` | RateLimit (10/15m), CSRF, Origin |
-| `POST` | `/api/auth/logout` | `app.post("/api/auth/logout")` | `AuthController@logout` | `auth:sanctum`, CSRF |
-| `POST` | `/api/auth/password` | `app.post("/api/auth/password")` | `AuthController@changePassword`| `auth:sanctum`, CSRF |
-| `GET` | `/api/public/appearance`| `app.get("/api/public/appearance")` | `PublicController@appearance` | Public |
-| `GET` | `/api/public/site` | `app.get("/api/public/site")` | `PublicController@site` | Public (no-store) |
-| `GET` | `/api/public/{col}/{slug}`| `app.get("/api/public/:col/:slug")`| `PublicController@detail` | Public (no-store) |
-| `POST` | `/api/requests` | `app.post("/api/requests")` | `RequestController@store` | RateLimit (10/1h), Honeypot |
-| `GET` | `/media/{id}` | `app.get("/media/:id")` | `MediaController@show` | Public (protected-check) |
-| `GET` | `/api/admin/dashboard` | `app.get("/api/admin/dashboard")` | `DashboardController@index` | `auth:sanctum`, CSRF |
-| `GET` | `/api/admin/content/{col}`| `app.get("/api/admin/content/:col")`| `ContentController@index` | `auth:sanctum`, CSRF |
-| `POST` | `/api/admin/content/{col}`| `app.post("/api/admin/content/:col")`| `ContentController@store`| `auth:sanctum`, CSRF |
-| `PUT` | `/api/admin/content/{col}/{id}`| `app.put("/api/admin/content/:col/:id")`| `ContentController@update`| `auth:sanctum`, CSRF |
-| `POST` | `/api/admin/content/{col}/{id}/{action}`| `app.post("/.../:action")` | `ContentController@action` | `auth:sanctum`, CSRF |
-| `GET` | `/api/admin/settings` | `app.get("/api/admin/settings")` | `SettingController@index` | `auth:sanctum`, CSRF |
-| `PUT` | `/api/admin/settings/{id}`| `app.put("/api/admin/settings/:id")`| `SettingController@update` | `auth:sanctum`, CSRF |
-| `GET` | `/api/admin/requests` | `app.get("/api/admin/requests")` | `LeadController@index` | `auth:sanctum`, CSRF |
-| `GET` | `/api/admin/requests/{id}`| `app.get("/api/admin/requests/:id")`| `LeadController@show` | `auth:sanctum`, CSRF |
-| `PUT`/`PATCH`| `/api/admin/requests/{id}`| `app.patch("/api/admin/requests/:id")`| `LeadController@update`| `auth:sanctum`, CSRF |
-| `GET` | `/api/admin/media` | `app.get("/api/admin/media")` | `MediaAdminController@index`| `auth:sanctum`, CSRF |
-| `POST` | `/api/admin/media` | `app.post("/api/admin/media")` | `MediaAdminController@store`| `auth:sanctum`, CSRF, 5MB limit |
-| `PUT` | `/api/admin/media/{id}` | `app.put("/api/admin/media/:id")` | `MediaAdminController@update`| `auth:sanctum`, CSRF |
-| `PUT` | `/api/admin/media/{id}/file`| `app.put("/api/admin/media/:id/file")`| `MediaAdminController@replace`| `auth:sanctum`, CSRF |
-| `GET` | `/api/admin/media/{id}/usage`| `app.get("/api/admin/media/:id/usage")`| `MediaAdminController@usage`| `auth:sanctum`, CSRF |
-| `DELETE`| `/api/admin/media/{id}` | `app.delete("/api/admin/media/:id")` | `MediaAdminController@destroy`| `auth:sanctum`, CSRF |
-| `GET` | `/api/admin/editor` | `app.get("/api/admin/editor")` | `EditorController@snapshot` | `auth:sanctum`, CSRF |
-| `PATCH`| `/api/admin/editor` | `app.patch("/api/admin/editor")` | `EditorController@batchSave`| `auth:sanctum`, CSRF (transactional)|
+| Route Path | HTTP Verb | Controller Action | Inertia Page Component | Purpose |
+| :--- | :---: | :--- | :--- | :--- |
+| `/` | `GET` | `HomeController@index` | `Pages/Home.tsx` | Main portfolio landing page (or visual editor if `?edit=1`) |
+| `/about` | `GET` | `PageController@about` | `Pages/About.tsx` | Full biography & journey timeline |
+| `/services` | `GET` | `PageController@services` | `Pages/Services.tsx` | All services catalog & pricing cards |
+| `/projects` | `GET` | `PageController@projects` | `Pages/Projects.tsx` | Case studies & live ecommerce funnels |
+| `/deals` | `GET` | `PageController@deals` | `Pages/Deals.tsx` | Exclusive discounts & software deals |
+| `/resources` | `GET` | `PageController@resources` | `Pages/Resources.tsx` | Free downloads, templates & blueprints |
+| `/booking` | `GET` | `PageController@booking` | `Pages/Booking.tsx` | Consultation calendar & appointment booking |
+| `/contact` | `GET` | `PageController@contact` | `Pages/Contact.tsx` | Direct inquiry contact form |
+| `/blog` | `GET` | `PageController@blog` | `Pages/Blog.tsx` | Article index |
+| `/{collection}/{slug}` | `GET` | `DetailController@show` | `Pages/Detail.tsx` | Dynamic single item viewer |
+| `/admin` | `GET` | `AdminController@index` | `Pages/Admin/Dashboard.tsx` or `Pages/Admin/Login.tsx` | Admin workspace / login |
+| `/media/{id}` | `GET` | `MediaController@show` | *Binary Stream* | Image / PDF binary streaming |
+| `/robots.txt` | `GET` | `SeoController@robots` | *Plain Text* | Search engine crawler rules |
+| `/sitemap.xml` | `GET` | `SeoController@sitemap` | *XML* | XML sitemap |
 
 ---
 
-## 7. Next.js Frontend Migration Strategy
+## 6. Authentication & Security Strategy
 
-### 7.1 Architecture & Directory Layout (App Router)
-
-The current Vite single-bundle SPA will transition to a **Next.js 15 App Router** architecture with React 19:
-
-```
-next-frontend/
-├── app/
-│   ├── layout.tsx                 # Root layout with dynamic theme CSS variables & fonts
-│   ├── page.tsx                   # SSR Homepage rendering dynamic ordered sections
-│   ├── about/page.tsx             # Server-rendered /about view
-│   ├── services/page.tsx          # Server-rendered /services listing
-│   ├── projects/page.tsx          # Server-rendered /projects listing
-│   ├── deals/page.tsx             # Server-rendered /deals listing
-│   ├── resources/page.tsx         # Server-rendered /resources listing
-│   ├── blog/page.tsx              # Server-rendered /blog listing
-│   ├── [collection]/[slug]/       # Dynamic Detail Route (Services, Projects, Blog, etc.)
-│   │   ├── page.tsx               # Server-rendered with generateMetadata()
-│   ├── admin/                     # Admin Workspace
-│   │   ├── layout.tsx             # Admin header, navigation, and auth guard
-│   │   ├── page.tsx               # Admin Dashboard / Module Switcher
-│   ├── robots.ts                  # Dynamic robots.txt generation
-│   ├── sitemap.ts                 # Dynamic sitemap.xml fetching published records
-│   └── api/proxy/[...path]/       # BFF route handlers (if proxying is required)
-├── components/                    # Preserved UI Components
-│   ├── ui/                        # Button, Dialog, Dropdown, Lucide wrappers
-│   ├── public/                    # Hero, Navbar, Footer, ServicesSection, etc.
-│   ├── admin/                     # LeadBoard, ContactInbox, AdminMediaLibrary, ThemePicker
-│   └── editor/                    # VisualEditor, EditBinding
-├── lib/
-│   ├── api.ts                     # Type-safe client for Laravel API
-│   ├── theme.ts                   # Palette applicator & CSS variable generator
-│   └── integrations.ts            # Client pixel initialization
-└── styles/
-    ├── globals.css                # Tailwind directives & CSS variable definitions
-    ├── design-themes.css          # Editorial, Studio, Executive typography & styles
-    └── public.css                 # Public layout styles
-```
-
-### 7.2 Server Components (RSC) vs. Client Components
-- **Server Components (Default)**:
-  - Homepage (`app/page.tsx`): Pre-fetches `/api/public/site` on the server. Renders initial HTML with full SEO content, zero client layout shifts, and instantaneous First Contentful Paint.
-  - Detail Pages (`app/[collection]/[slug]/page.tsx`): Pre-fetches the specific record, generating full `<article>` markup and OpenGraph metadata directly in the server response.
-- **Client Components (`"use client"`)**:
-  - `Navbar.tsx`: Mobile menu toggles, active anchor highlighting.
-  - `RequestForm.tsx` & `BookingSection.tsx`: Form validation, honeypot checking, API submission.
-  - `LeadBoard.tsx`: Drag-and-drop Kanban pipeline.
-  - `VisualEditor.tsx`: In-place live DOM editor.
-  - `ThemePicker.tsx`: Live theme preview frames.
-
-### 7.3 Preserving Framer Motion & Reduced Motion
-In Next.js App Router, Framer Motion requires the `"use client"` directive on wrapper components. A client-side `<MotionProvider>` will wrap pages with `<MotionConfig reducedMotion="...">` respecting the owner's `websiteMotion` setting and the visitor's `prefers-reduced-motion` browser preference.
+1. **No Public Registration:** Admin accounts bootstrapped strictly via `php artisan admin:create-owner`.
+2. **Password Cryptography:** Hashed using Laravel's native bcrypt at cost 12 (`$2y$12$`), with backward-compatible verification for legacy `$2b$` hashes.
+3. **Database Persistent Sessions:** Active user sessions stored in `laravel_sessions` table with automatic regeneration on login to prevent session fixation.
+4. **Double-Submit CSRF Protection:** Inertia automatically provides and validates the XSRF-TOKEN cookie on all state-changing requests (`POST`, `PUT`, `PATCH`, `DELETE`).
+5. **Rate Limiting:**
+   - Login: 5 failed attempts per IP per 15 minutes (`RateLimiter::tooManyAttempts('login:'.$ip, 5)`).
+   - Inquiries: 10 submissions per IP per 10 minutes (`RateLimiter::tooManyAttempts('leads:'.$ip, 10)`).
+6. **MIME Verification:** Uploaded files validated against libmagic byte signatures via `finfo` (not trusting client extension or MIME).
+7. **Dynamic Content Security Policy:** Dynamic CSP headers configured in middleware:
+   - Meta Pixel active $\rightarrow$ injects `connect.facebook.net`
+   - GTM active $\rightarrow$ injects `googletagmanager.com`
+   - TikTok active $\rightarrow$ injects `analytics.tiktok.com`
 
 ---
 
-## 8. Authentication & Session Migration
-
-### 8.1 Password Compatibility
-- The existing system uses standard **bcrypt** (`$2b$12$...` salt rounds).
-- PHP's native `password_verify()` and Laravel's `Hash::check()` natively support `$2a$`, `$2b$`, and `$2y$` bcrypt hashes.
-- Existing user credentials in the `users` table will work immediately without password resets or re-hashing.
-
-### 8.2 Laravel Sanctum Stateful Session Authentication
-- Next.js and Laravel will share the same top-level domain (or use a reverse proxy such as Nginx in production, maintaining a unified origin).
-- Laravel Sanctum provides stateful cookie-based authentication via `portfolio_session`.
-- The CSRF token workflow:
-  1. Next.js calls `GET /sanctum/csrf-cookie` or `/api/auth/session`.
-  2. Laravel returns the CSRF cookie and session status.
-  3. All mutating calls (`POST`, `PUT`, `PATCH`, `DELETE`) pass the token via `X-CSRF-Token` or `X-XSRF-Token`.
-
----
-
-## 9. Security Migration & Hardening
-
-| Security Mechanism | Current Express Implementation | Target Laravel 12 Implementation |
-| :--- | :--- | :--- |
-| **Origin Verification** | Compares `req.get("origin") === origin` on write routes | Custom middleware `VerifyAppOrigin` rejecting mismatched origins with `403 Forbidden` |
-| **Double-Submit CSRF** | Timing-safe check of `x-csrf-token` header vs. session | Laravel Sanctum middleware `ValidateCsrfToken` with timing-safe string comparison |
-| **Rate Limiting** | `express-rate-limit` (10/15m on login; 10/1h on requests) | Laravel `RateLimiter::for('login')` and `RateLimiter::for('leads')` using Redis or DB cache |
-| **HTML Sanitization** | `sanitize-html` allowing small whitelist of tags | `Mews/Purifier` (HTMLPurifier) configured with the identical whitelist |
-| **File Verification** | `fileTypeFromBuffer` verifying magic bytes | Laravel's `$request->file('file')->getMimeType()` checking libmagic / fileinfo |
-| **Input Validation** | Zod schemas with regex rules | Laravel `FormRequest` classes with custom Rule objects |
-| **Honeypot Protection**| Empty `website` field in `requestSchema` | Laravel FormRequest asserting `website` field is absent or empty string |
-
----
-
-## 10. Media Storage Migration Strategy
-
-### The Binary BLOB Trade-Off
-The current architecture stores file bytes directly in the `media.bytes` column (`MEDIUMBLOB`). This was an intentional design decision to allow single-file database backups (`mysqldump --hex-blob`) without filesystem synchronization drift.
-
-### Migration Strategy: Dual-Compatible Media Engine
-1. **Preserve Current DB BLOB Storage (Recommended for Parity)**:
-   - Laravel 12 will read `media.bytes` and stream it directly using `response()->stream()`:
-   ```php
-   return response($media->bytes, 200, [
-       'Content-Type' => $media->mime,
-       'Content-Length' => $media->size,
-       'Cache-Control' => 'private, no-store',
-       'Content-Disposition' => ($media->mime === 'application/pdf' ? 'attachment' : 'inline') . '; filename="' . $media->id . '"',
-   ]);
-   ```
-2. **Optional Phase 2 Transition (Filesystem / S3 Storage)**:
-   - If database performance optimization is desired later, a migration script can extract the BLOBs to `storage/app/public/media/{id}` and update the `media` table to store a relative disk path instead.
-   - For Phase 1, the BLOB model will be retained to guarantee zero migration friction.
-
----
-
-## 11. SEO & Metadata Preservation
-
-In the legacy SPA, an Express middleware scraped the database and regex-replaced `<title>`, `<meta>`, and `<div id="root">` before sending `index.html`.
-
-In Next.js, this is handled natively and cleanly via **Dynamic Metadata**:
-- In `app/[collection]/[slug]/page.tsx`:
-```typescript
-export async function generateMetadata({ params }): Promise<Metadata> {
-  const record = await fetchPublicDetail(params.collection, params.slug);
-  return {
-    title: record.seo_title || record.title,
-    description: record.seo_description || record.summary,
-    alternates: { canonical: `${siteUrl}/${params.collection}/${params.slug}` },
-    openGraph: {
-      title: record.seo_title || record.title,
-      description: record.seo_description || record.summary,
-      url: `${siteUrl}/${params.collection}/${params.slug}`,
-      type: 'article',
-      images: record.fields.image ? [record.fields.image] : [],
-    },
-  };
-}
-```
-- `robots.ts` and `sitemap.ts` will dynamically query the Laravel API for all published slugs, ensuring zero broken links or indexing penalties.
-
----
-
-## 12. Deployment Architecture & Infrastructure
-
-### Recommended Production Setup (Single Origin via Reverse Proxy)
-
-To eliminate cross-origin complexity, CORS bugs, and multi-domain cookie issues, the production environment will use Nginx (or Hostinger / Cloudflare reverse proxy):
+## 7. Migration Execution Phases
 
 ```mermaid
 flowchart LR
-    Visitor["Web Visitor"] --> Nginx["Nginx Reverse Proxy (Port 443 HTTPS)"]
-    Nginx -->|/api/* and /media/*| Laravel["Laravel 12 (PHP-FPM / Octane, Port 8000)"]
-    Nginx -->|All Other Routes /*| NextJS["Next.js Node Server (Port 3000)"]
-    Laravel --> MySQL[("MySQL 8 Database")]
+    P1["Phase 1: Codebase Audit & Plan"] --> P2["Phase 2: Project Root Layout"]
+    P2 --> P3["Phase 3: Inertia & Vite Setup"]
+    P3 --> P4["Phase 4: Controllers & Web Routes"]
+    P4 --> P5["Phase 5: React Pages & Shared Props"]
+    P5 --> P6["Phase 6: In-Place Visual Editor & Admin"]
+    P6 --> P7["Phase 7: Full E2E & Visual Testing"]
+    P7 --> P8["Phase 8: Legacy Express Elimination"]
 ```
 
-### Environment Variables Mapping
-
-| Environment Variable | Express / Vite | Laravel 12 (`.env`) | Next.js (`.env.local`) |
-| :--- | :--- | :--- | :--- |
-| **Origin URL** | `APP_ORIGIN` | `SANCTUM_STATEFUL_DOMAINS`, `APP_URL` | `NEXT_PUBLIC_SITE_URL` |
-| **API Base URL** | Vite Proxy | N/A | `NEXT_PUBLIC_API_URL` |
-| **Database Host** | `DB_HOST` | `DB_HOST` | N/A |
-| **Database Port** | `DB_PORT` | `DB_PORT` | N/A |
-| **Database Name** | `DB_NAME` | `DB_DATABASE` | N/A |
-| **Database User** | `DB_USER` | `DB_USERNAME` | N/A |
-| **Database Pass** | `DB_PASSWORD` | `DB_PASSWORD` | N/A |
-| **Session Secret** | `SESSION_SECRET` | `APP_KEY` (via `php artisan key:generate`) | N/A |
+- **Phase 1 (Current):** Complete Codebase Audit, `MIGRATION_PLAN.md`, and `MIGRATION_PROGRESS.md`.
+- **Phase 2:** Move Laravel framework foundation to project root (`c:\xampp\htdocs\portfolio`), preserving existing database and asset configurations.
+- **Phase 3:** Install `inertiajs/inertia-laravel` and `@inertiajs/react`, configure `resources/views/app.blade.php`, `resources/js/app.tsx`, and `vite.config.ts`.
+- **Phase 4:** Implement web routes in `routes/web.php` and map all controllers with FormRequests and security middleware.
+- **Phase 5:** Build Inertia React page components in `resources/js/Pages/` reusing existing components from `components/` with 100% design fidelity.
+- **Phase 6:** Migrate in-place visual editor (`?edit=1`), admin workspace, Lead CRM Kanban, and media management into Inertia pages.
+- **Phase 7:** Execute automated test suites (Laravel feature tests, database integrity checks, visual regression across desktop/tablet/mobile viewports).
+- **Phase 8:** Completely remove legacy Express and Next.js artifacts, clean up obsolete dependencies, and verify production build.
 
 ---
 
-## 13. Potential Breaking Changes & Mitigation Strategies
+## 8. Identified Risks & Mitigation Strategies
 
-| Risk / Edge Case | Potential Impact | Mitigation Strategy |
-| :--- | :--- | :--- |
-| **Bcrypt Salt Prefix Difference** | PHP usually outputs `$2y$`, Node outputs `$2b$` | PHP's `password_verify()` natively handles both `$2b$` and `$2y$` without issue. Verified. |
-| **JSON Column Encoding** | Escaping differences in MySQL JSON fields | Use `json_encode($fields, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)` to match Node's output. |
-| **Next.js Hydration Mismatches** | Theme CSS variables applied after mount | Server injects CSS variables inline in `app/layout.tsx` before DOM paint. |
-| **Visual Editor Iframe Communication** | Next.js security headers blocking `/?preview=design` | Add `frame-ancestors 'self'` to CSP in Next.js middleware and Laravel headers. |
-| **MySQL Max Packet Size** | 5 MB upload exceeding `max_allowed_packet` | Verify `max_allowed_packet=16M` in `my.ini` / `my.cnf`. |
-
----
-
-## 14. Phased Implementation Roadmap
-
-```mermaid
-gantt
-    title Migration Execution Roadmap
-    dateFormat  YYYY-MM-DD
-    section Phase 1: Audit & Planning
-    Codebase Audit & Plan Document       :done,    p1, 2026-11-16, 1d
-    section Phase 2: Laravel 12 Backend
-    Laravel Setup & Migrations           :active,  p2_1, 2026-11-17, 1d
-    Eloquent Models & Validation Rules   :         p2_2, after p2_1, 1d
-    API Controllers & Sanctum Auth       :         p2_3, after p2_2, 1d
-    Media Streaming & In-Place Editor API:         p2_4, after p2_3, 1d
-    Backend Automated Integration Tests  :         p2_5, after p2_4, 1d
-    section Phase 3: Next.js Frontend
-    Next.js Setup & Tailwind/Theme Port  :         p3_1, 2026-11-20, 1d
-    Public Sections & SSR Detail Pages   :         p3_2, after p3_1, 1d
-    Admin Workspace & LeadBoard Port     :         p3_3, after p3_2, 1d
-    Visual In-Place Editor Integration   :         p3_4, after p3_3, 1d
-    section Phase 4: Verification & Cutover
-    End-to-End Visual & Functional QA    :         p4_1, 2026-11-24, 1d
-    Production Deployment & Cutover      :         p4_2, after p4_1, 1d
-```
-
-- **Phase 1 (Current)**: Forensic audit, schema extraction, and architectural planning (**COMPLETED**).
-- **Phase 2**: Scaffold Laravel 12 backend in a parallel directory; implement models, migrations, controllers, Sanctum auth, and unit tests.
-- **Phase 3**: Scaffold Next.js App Router frontend in a parallel directory; port Tailwind styles, components, Framer Motion animations, admin panels, and visual editor.
-- **Phase 4**: Comprehensive regression testing against real MySQL data, security audits, and cutover.
+| Risk | Impact | Mitigation Strategy |
+| :--- | :---: | :--- |
+| **MEDIUMBLOB Hex Truncation** | High | Backups must always specify `mysqldump --single-transaction --hex-blob`. Streaming response verified with SHA-256 match. |
+| **CSS Style Drift** | High | Reusing exact CSS files (`public.css`, `design-themes.css`, `styles.css`) and Tailwind token configurations without class modifications. |
+| **Inertia Shared Prop Bloat** | Medium | Keep shared props in `HandleInertiaRequests` restricted to global site settings, active theme, and auth state; page-specific content passed only via controller `$props`. |
+| **Visual Editor Concurrency Conflicts** | Medium | Enforce database-level transactions with pessimistic locking (`lockForUpdate`) and optimistic version counter checks (`where('version', $v)`). |
+| **Stale Session Cookies** | Low | Session cookie named `portfolio_sid` with standard path `/` and proper SameSite lax policy. |

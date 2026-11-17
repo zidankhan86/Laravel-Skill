@@ -1,0 +1,48 @@
+@import "../../styles.css";
+@import "../../public.css";
+@import "../../design-themes.css";
+@import "../../components/admin.css";
+@import "../../components/admin-workspace.css";
+@import "../../components/visual-editor.css";
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: #0a0a0a;
+  color: #ffffff;
+  overflow-x: hidden;
+}
+
+.font-brand {
+  font-family: "Montserrat", sans-serif;
+}
+
+.text-gradient-red {
+  background: linear-gradient(to right, #8b0000, #dc143c, #ff4500);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.bg-gradient-red {
+  background: linear-gradient(135deg, #8b0000 0%, #dc143c 50%, #ff4500 100%);
+}
+
+.soft-shadow {
+  box-shadow: 0 10px 40px -10px rgba(220, 20, 60, 0.4);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #262626;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #404040;
+}

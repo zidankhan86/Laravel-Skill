@@ -1,9 +1,9 @@
 export default {
   content: [
-    "./index.html",
-    "./index.tsx",
-    "./App.tsx",
+    "./resources/**/*.blade.php",
+    "./resources/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{ts,tsx}",
+    "./App.tsx",
   ],
   theme: {
     extend: {

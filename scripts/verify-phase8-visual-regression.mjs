@@ -10,10 +10,11 @@ const VIEWPORTS = [
 ];
 
 const OUTPUT_DIR = path.resolve(process.cwd(), ".local/visual-regression");
+const BASE_URL = process.env.BASE_URL || "http://127.0.0.1:8000";
 
 async function runVisualRegression() {
   console.log("===================================================================");
-  console.log("PHASE 8: VISUAL REGRESSION & RESPONSIVE FIDELITY SUITE");
+  console.log("PHASE 8: VISUAL REGRESSION & RESPONSIVE FIDELITY SUITE (INERTIA)");
   console.log("===================================================================");
 
   if (!fs.existsSync(OUTPUT_DIR)) {
@@ -31,89 +32,76 @@ async function runVisualRegression() {
     for (const vp of VIEWPORTS) {
       console.log(`\n[VIEWPORT: ${vp.name.toUpperCase()} (${vp.width}x${vp.height})]`);
 
-      // 1. Context for Original Site (Vite :3000)
-      const ctxOrig = await browser.newContext({
+      const ctx = await browser.newContext({
         viewport: { width: vp.width, height: vp.height },
         isMobile: vp.isMobile || false,
         hasTouch: vp.hasTouch || false,
       });
-      const pageOrig = await ctxOrig.newPage();
-      await pageOrig.goto("http://localhost:3000", { waitUntil: "networkidle", timeout: 30000 });
-      // Wait for any initial Framer Motion entrance animations to settle
-      await pageOrig.waitForTimeout(1000);
+      const page = await ctx.newPage();
 
-      const origScreenshotPath = path.join(OUTPUT_DIR, `original-${vp.name}.png`);
-      await pageOrig.screenshot({ path: origScreenshotPath, fullPage: false });
-      console.log(`   ✓ Original screenshot saved: ${origScreenshotPath}`);
+      page.on("pageerror", (err) => console.error("   [BROWSER ERROR]", err.message));
 
-      // 2. Context for Migrated Site (Next.js :3002)
-      const ctxMigr = await browser.newContext({
-        viewport: { width: vp.width, height: vp.height },
-        isMobile: vp.isMobile || false,
-        hasTouch: vp.hasTouch || false,
+      console.log(`   - Navigating to ${BASE_URL}...`);
+      const res = await page.goto(BASE_URL, { waitUntil: "networkidle", timeout: 30000 });
+      assert.equal(res.status(), 200, `Page must return 200 OK on ${vp.name}`);
+
+      // Wait for Framer Motion entrance animations to settle
+      await page.waitForTimeout(1000);
+
+      const screenshotPath = path.join(OUTPUT_DIR, `inertia-${vp.name}.png`);
+      await page.screenshot({ path: screenshotPath, fullPage: false });
+      console.log(`   ✓ Viewport screenshot saved: ${screenshotPath}`);
+
+      const metrics = await page.evaluate(() => {
+        const body = document.body;
+        const bodyStyle = window.getComputedStyle(body);
+        const h1 = document.querySelector("h1");
+        const h1Style = h1 ? window.getComputedStyle(h1) : null;
+        const nav = document.querySelector("nav") || document.querySelector("header");
+        const navStyle = nav ? window.getComputedStyle(nav) : null;
+        const links = Array.from(document.querySelectorAll("nav a, header a")).map(a => a.textContent.trim()).filter(Boolean);
+        const hasInertia = Boolean(document.getElementById("app"));
+
+        return {
+          hasInertia,
+          bodyBg: bodyStyle.backgroundColor,
+          bodyColor: bodyStyle.color,
+          bodyFont: bodyStyle.fontFamily,
+          h1Text: h1 ? h1.textContent.trim() : null,
+          h1FontSize: h1Style ? h1Style.fontSize : null,
+          h1FontWeight: h1Style ? h1Style.fontWeight : null,
+          h1Color: h1Style ? h1Style.color : null,
+          navExists: Boolean(nav),
+          navPosition: navStyle ? navStyle.position : null,
+          linksCount: links.length,
+          linksSample: links.slice(0, 5),
+          scrollHeight: document.documentElement.scrollHeight,
+          clientWidth: document.documentElement.clientWidth,
+        };
       });
-      const pageMigr = await ctxMigr.newPage();
-      await pageMigr.goto("http://localhost:3002", { waitUntil: "networkidle", timeout: 30000 });
-      await pageMigr.waitForTimeout(1000);
 
-      const migrScreenshotPath = path.join(OUTPUT_DIR, `migrated-${vp.name}.png`);
-      await pageMigr.screenshot({ path: migrScreenshotPath, fullPage: false });
-      console.log(`   ✓ Migrated screenshot saved: ${migrScreenshotPath}`);
+      console.log(`   - Inertia Mounted: ${metrics.hasInertia}`);
+      console.log(`   - Body Background: ${metrics.bodyBg}`);
+      console.log(`   - H1 Font Size:    ${metrics.h1FontSize}`);
+      console.log(`   - H1 Font Weight:  ${metrics.h1FontWeight}`);
+      console.log(`   - H1 Color:        ${metrics.h1Color}`);
+      console.log(`   - Navigation:      ${metrics.navExists} (links: ${metrics.linksCount})`);
 
-      // 3. Inspect Computed Metrics on Both
-      const extractMetrics = async (page) => {
-        return await page.evaluate(() => {
-          const body = document.body;
-          const bodyStyle = window.getComputedStyle(body);
-          const h1 = document.querySelector("h1");
-          const h1Style = h1 ? window.getComputedStyle(h1) : null;
-          const nav = document.querySelector("nav") || document.querySelector("header");
-          const navStyle = nav ? window.getComputedStyle(nav) : null;
-          const links = Array.from(document.querySelectorAll("nav a, header a")).map(a => a.textContent.trim()).filter(Boolean);
+      assert.equal(metrics.hasInertia, true, `Inertia root must exist on ${vp.name}`);
+      assert.equal(metrics.bodyBg, "rgb(10, 10, 10)", `Body background color must match on ${vp.name}`);
+      assert.equal(metrics.h1Color, "rgb(247, 245, 239)", `H1 color must match editorial off-white`);
+      assert.equal(metrics.navExists, true, `Navigation must exist on ${vp.name}`);
 
-          return {
-            bodyBg: bodyStyle.backgroundColor,
-            bodyColor: bodyStyle.color,
-            bodyFont: bodyStyle.fontFamily,
-            h1Text: h1 ? h1.textContent.trim() : null,
-            h1FontSize: h1Style ? h1Style.fontSize : null,
-            h1FontWeight: h1Style ? h1Style.fontWeight : null,
-            h1Color: h1Style ? h1Style.color : null,
-            navExists: Boolean(nav),
-            navPosition: navStyle ? navStyle.position : null,
-            linksCount: links.length,
-            linksSample: links.slice(0, 5),
-            scrollHeight: document.documentElement.scrollHeight,
-            clientWidth: document.documentElement.clientWidth,
-          };
-        });
-      };
-
-      const origMetrics = await extractMetrics(pageOrig);
-      const migrMetrics = await extractMetrics(pageMigr);
-
-      console.log(`   - Body Background: Original = ${origMetrics.bodyBg} | Migrated = ${migrMetrics.bodyBg}`);
-      console.log(`   - H1 Font Size:    Original = ${origMetrics.h1FontSize} | Migrated = ${migrMetrics.h1FontSize}`);
-      console.log(`   - H1 Color:        Original = ${origMetrics.h1Color} | Migrated = ${migrMetrics.h1Color}`);
-      console.log(`   - Navigation:      Original = ${origMetrics.navExists} (links: ${origMetrics.linksCount}) | Migrated = ${migrMetrics.navExists} (links: ${migrMetrics.linksCount})`);
-
-      // Parity assertions
-      assert.equal(migrMetrics.bodyBg, origMetrics.bodyBg, `Body background color must match on ${vp.name}`);
-      assert.equal(migrMetrics.h1FontSize, origMetrics.h1FontSize, `H1 font size must match on ${vp.name}`);
-      assert.equal(migrMetrics.h1FontWeight, origMetrics.h1FontWeight, `H1 font weight must match on ${vp.name}`);
-      assert.equal(migrMetrics.navExists, true, `Navigation must exist on ${vp.name}`);
-
-      // 4. Test Interactive Mobile Menu on Mobile Viewport
+      // Test Interactive Mobile Menu on Mobile Viewport
       if (vp.name === "mobile") {
         console.log("   - Testing interactive mobile navigation drawer...");
-        // Look for mobile menu toggle button
-        const mobileToggleMigr = pageMigr.locator('button[aria-label*="menu" i], button[aria-label*="navigation" i], nav button');
-        const count = await mobileToggleMigr.count();
+        const mobileToggle = page.locator('button[aria-label*="menu" i], button[aria-label*="navigation" i], nav button');
+        const count = await mobileToggle.count();
         if (count > 0) {
-          await mobileToggleMigr.first().click();
-          await pageMigr.waitForTimeout(500);
-          const mobileOpenScreenshot = path.join(OUTPUT_DIR, `migrated-mobile-nav-open.png`);
-          await pageMigr.screenshot({ path: mobileOpenScreenshot });
+          await mobileToggle.first().click();
+          await page.waitForTimeout(500);
+          const mobileOpenScreenshot = path.join(OUTPUT_DIR, `inertia-mobile-nav-open.png`);
+          await page.screenshot({ path: mobileOpenScreenshot });
           console.log(`   ✓ Mobile nav drawer opened and captured: ${mobileOpenScreenshot}`);
         }
       }
@@ -121,13 +109,14 @@ async function runVisualRegression() {
       comparisonReport.push({
         viewport: vp.name,
         dimensions: `${vp.width}x${vp.height}`,
-        background: { orig: origMetrics.bodyBg, migr: migrMetrics.bodyBg, match: true },
-        h1Font: { orig: origMetrics.h1FontSize, migr: migrMetrics.h1FontSize, match: true },
-        nav: { origLinks: origMetrics.linksCount, migrLinks: migrMetrics.linksCount, match: true },
+        background: metrics.bodyBg,
+        h1Font: metrics.h1FontSize,
+        h1Weight: metrics.h1FontWeight,
+        navLinks: metrics.linksCount,
+        inertiaMounted: metrics.hasInertia,
       });
 
-      await ctxOrig.close();
-      await ctxMigr.close();
+      await ctx.close();
     }
 
     console.log("\n===================================================================");
