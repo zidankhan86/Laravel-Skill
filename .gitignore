@@ -34,6 +34,13 @@ test-results/
 .dist/
 storage/installed.lock
 storage/installer_state.json
+storage/framework/cache/data/*
+storage/framework/sessions/*
+storage/framework/views/*
+storage/logs/*
+bootstrap/cache/*.php
+!bootstrap/cache/.gitignore
+.phpunit.result.cache
 
 # Ensure production frontend build assets are tracked for zero-dependency web deployments
 !public/build/
