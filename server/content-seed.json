@@ -1,0 +1,432 @@
+[
+    {
+        "collection": "deals",
+        "slug": "bluehost-exclusive-hosting",
+        "title": "Bluehost Exclusive Hosting",
+        "summary": "The most reliable hosting for WordPress websites with a free domain.",
+        "body": "",
+        "status": "published",
+        "featured": 1,
+        "sort_order": 0,
+        "fields": {
+            "tag": "Hosting",
+            "link": "https://www.bluehost.com",
+            "image": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1172&auto=format&fit=crop",
+            "coupon": "",
+            "category": "Hosting",
+            "discount": "70% OFF",
+            "expiresAt": null
+        }
+    },
+    {
+        "collection": "deals",
+        "slug": "elementor-pro-page-builder",
+        "title": "Elementor Pro Page Builder",
+        "summary": "Design high-converting landing pages without any coding skills.",
+        "body": "",
+        "status": "published",
+        "featured": 1,
+        "sort_order": 1,
+        "fields": {
+            "tag": "Tools",
+            "link": "https://elementor.com",
+            "image": "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1170&auto=format&fit=crop",
+            "coupon": "",
+            "category": "Tools",
+            "discount": "25% OFF",
+            "expiresAt": null
+        }
+    },
+    {
+        "collection": "deals",
+        "slug": "hostinger-business-plan",
+        "title": "Hostinger Business Plan",
+        "summary": "Lightning fast speed for eCommerce stores at an unbeatable price.",
+        "body": "",
+        "status": "published",
+        "featured": 1,
+        "sort_order": 2,
+        "fields": {
+            "tag": "Hosting",
+            "link": "https://www.hostinger.com",
+            "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc51?q=80&w=1170&auto=format&fit=crop",
+            "coupon": "",
+            "category": "Hosting",
+            "discount": "80% OFF",
+            "expiresAt": null
+        }
+    },
+    {
+        "collection": "projects",
+        "slug": "ecommerce-sales-machine",
+        "title": "eCommerce Sales Machine",
+        "summary": "Psychology-driven storefront for high-ticket fashion brand.",
+        "body": "",
+        "status": "published",
+        "featured": 1,
+        "sort_order": 0,
+        "fields": {
+            "image": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1170&auto=format&fit=crop",
+            "client": "",
+            "gallery": [],
+            "liveUrl": "",
+            "category": "Storefront",
+            "outcomes": "",
+            "technologies": []
+        }
+    },
+    {
+        "collection": "projects",
+        "slug": "sellbook-inventory-dashboard",
+        "title": "SellBook Inventory Dashboard",
+        "summary": "Centralized automation hub for multi-channel sales.",
+        "body": "",
+        "status": "published",
+        "featured": 1,
+        "sort_order": 1,
+        "fields": {
+            "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1170&auto=format&fit=crop",
+            "client": "",
+            "gallery": [],
+            "liveUrl": "",
+            "category": "Automation",
+            "outcomes": "",
+            "technologies": []
+        }
+    },
+    {
+        "collection": "projects",
+        "slug": "health-supplement-funnel",
+        "title": "Health Supplement Funnel",
+        "summary": "High-conversion landing page with upsell architecture.",
+        "body": "",
+        "status": "published",
+        "featured": 1,
+        "sort_order": 2,
+        "fields": {
+            "image": "https://images.unsplash.com/photo-1512314889357-e157c22f938d?q=80&w=1171&auto=format&fit=crop",
+            "client": "",
+            "gallery": [],
+            "liveUrl": "",
+            "category": "Funnel",
+            "outcomes": "",
+            "technologies": []
+        }
+    },
+    {
+        "collection": "resources",
+        "slug": "ecommerce-automation-blueprint",
+        "title": "eCommerce Automation Blueprint",
+        "summary": "A complete step-by-step guide to automating your sales and inventory.",
+        "body": "",
+        "status": "published",
+        "featured": 1,
+        "sort_order": 0,
+        "fields": {
+            "tag": "Ebook",
+            "type": "free",
+            "image": "https://images.unsplash.com/photo-1589998059171-988d887df646?q=80&w=1176&auto=format&fit=crop",
+            "price": null,
+            "fileId": null,
+            "private": false,
+            "category": "Ebook",
+            "currency": "BDT",
+            "downloadUrl": "",
+            "whatsappUrl": ""
+        }
+    },
+    {
+        "collection": "resources",
+        "slug": "high-converting-copywriting-templates",
+        "title": "High-Converting Copywriting Templates",
+        "summary": "Proven templates for landing pages that double your conversion rate.",
+        "body": "",
+        "status": "published",
+        "featured": 1,
+        "sort_order": 1,
+        "fields": {
+            "tag": "Document",
+            "type": "paid",
+            "image": "https://images.unsplash.com/photo-1517842645767-c639042777db?q=80&w=1170&auto=format&fit=crop",
+            "price": null,
+            "fileId": null,
+            "private": false,
+            "category": "Document",
+            "currency": "BDT",
+            "downloadUrl": "",
+            "whatsappUrl": ""
+        }
+    },
+    {
+        "collection": "resources",
+        "slug": "facebook-ads-strategy-for-bd-founders",
+        "title": "Facebook Ads Strategy for BD Founders",
+        "summary": "Specific strategies used by the top 1% eCommerce owners in Bangladesh.",
+        "body": "",
+        "status": "published",
+        "featured": 1,
+        "sort_order": 2,
+        "fields": {
+            "tag": "Guide",
+            "type": "free",
+            "image": "https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=1170&auto=format&fit=crop",
+            "price": null,
+            "fileId": null,
+            "private": false,
+            "category": "Guide",
+            "currency": "BDT",
+            "downloadUrl": "",
+            "whatsappUrl": ""
+        }
+    },
+    {
+        "collection": "resources",
+        "slug": "inventory-master-spreadsheet",
+        "title": "Inventory Master Spreadsheet",
+        "summary": "Advanced Excel system to track every single penny and stock item.",
+        "body": "",
+        "status": "published",
+        "featured": 1,
+        "sort_order": 3,
+        "fields": {
+            "tag": "Tool",
+            "type": "paid",
+            "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1172&auto=format&fit=crop",
+            "price": null,
+            "fileId": null,
+            "private": false,
+            "category": "Tool",
+            "currency": "BDT",
+            "downloadUrl": "",
+            "whatsappUrl": ""
+        }
+    },
+    {
+        "collection": "services",
+        "slug": "high-converting-ecommerce-website",
+        "title": "High Converting eCommerce Website",
+        "summary": "Psychology + CRO + Automation for maximum sales impact.",
+        "body": "",
+        "status": "published",
+        "featured": 1,
+        "sort_order": 0,
+        "fields": {
+            "icon": "ShoppingBag",
+            "image": "",
+            "ctaUrl": "/#booking",
+            "category": "",
+            "ctaLabel": "Book Now",
+            "features": [
+                "Custom UI/UX",
+                "Conversion Optimized",
+                "Fast Performance"
+            ]
+        }
+    },
+    {
+        "collection": "services",
+        "slug": "advanced-landing-page-funnel",
+        "title": "Advanced Landing Page Funnel",
+        "summary": "Multi-stage funnels designed for Lead → Conversion → Retention.",
+        "body": "",
+        "status": "published",
+        "featured": 1,
+        "sort_order": 1,
+        "fields": {
+            "icon": "Layers",
+            "image": "",
+            "ctaUrl": "/#booking",
+            "category": "",
+            "ctaLabel": "Book Now",
+            "features": [
+                "Sales Copywriting",
+                "A/B Testing",
+                "Email Automation"
+            ]
+        }
+    },
+    {
+        "collection": "services",
+        "slug": "custom-ecommerce-system-laravel",
+        "title": "Custom eCommerce System (Laravel)",
+        "summary": "Scalable, secure, and tailor-made for specific business needs.",
+        "body": "",
+        "status": "published",
+        "featured": 1,
+        "sort_order": 2,
+        "fields": {
+            "icon": "Code",
+            "image": "",
+            "ctaUrl": "/#booking",
+            "category": "",
+            "ctaLabel": "Book Now",
+            "features": [
+                "API Integration",
+                "Scalable Database",
+                "Enterprise Security"
+            ]
+        }
+    },
+    {
+        "collection": "services",
+        "slug": "automation-inventory-system-sellbook",
+        "title": "Automation & Inventory System (SellBook)",
+        "summary": "Complete control over Order, Stock, Courier, and Profit tracking.",
+        "body": "",
+        "status": "published",
+        "featured": 1,
+        "sort_order": 3,
+        "fields": {
+            "icon": "Settings",
+            "image": "",
+            "ctaUrl": "/#booking",
+            "category": "",
+            "ctaLabel": "Book Now",
+            "features": [
+                "Courier API",
+                "Profit Calculator",
+                "Real-time Stock"
+            ]
+        }
+    },
+    {
+        "collection": "services",
+        "slug": "consultation-business-architecture",
+        "title": "Consultation & Business Architecture",
+        "summary": "Strategic planning of Funnel, System Design, and Growth pathways.",
+        "body": "",
+        "status": "published",
+        "featured": 1,
+        "sort_order": 4,
+        "fields": {
+            "icon": "Target",
+            "image": "",
+            "ctaUrl": "/#booking",
+            "category": "",
+            "ctaLabel": "Book Now",
+            "features": [
+                "Market Analysis",
+                "System Blueprinting",
+                "Performance Audit"
+            ]
+        }
+    },
+    {
+        "collection": "testimonials",
+        "slug": "rahat-ahmed",
+        "title": "Rahat Ahmed",
+        "summary": "Tanvir didn't just build a site; he built a system that saves me 4 hours daily. The automation is incredible.",
+        "body": "",
+        "status": "published",
+        "featured": 1,
+        "sort_order": 0,
+        "fields": {
+            "name": "Rahat Ahmed",
+            "role": "CEO, TechWear BD",
+            "image": "https://picsum.photos/seed/p1/100/100",
+            "rating": 5,
+            "category": "",
+            "videoUrl": ""
+        }
+    },
+    {
+        "collection": "testimonials",
+        "slug": "samiul-islam",
+        "title": "Samiul Islam",
+        "summary": "My conversion rate jumped from 1.2% to 4.5% after implementing the psychological triggers Tanvir suggested.",
+        "body": "",
+        "status": "published",
+        "featured": 1,
+        "sort_order": 1,
+        "fields": {
+            "name": "Samiul Islam",
+            "role": "Founder, GreenVibe",
+            "image": "https://picsum.photos/seed/p2/100/100",
+            "rating": 5,
+            "category": "",
+            "videoUrl": ""
+        }
+    },
+    {
+        "collection": "testimonials",
+        "slug": "junaid-khan",
+        "title": "Junaid Khan",
+        "summary": "The inventory system Tanvir designed solved our biggest stock nightmare. Highly recommended!",
+        "body": "",
+        "status": "published",
+        "featured": 1,
+        "sort_order": 2,
+        "fields": {
+            "name": "Junaid Khan",
+            "role": "Owner, PureHarvest",
+            "image": "https://picsum.photos/seed/p3/100/100",
+            "rating": 5,
+            "category": "",
+            "videoUrl": ""
+        }
+    },
+    {
+        "collection": "videos",
+        "slug": "ecommerce-fail",
+        "title": "কেন ৯০% eCommerce fail করে?",
+        "summary": "",
+        "body": "",
+        "status": "published",
+        "featured": 1,
+        "sort_order": 0,
+        "fields": {
+            "image": "https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=1074&auto=format&fit=crop",
+            "category": "",
+            "duration": "12:45",
+            "youtubeUrl": ""
+        }
+    },
+    {
+        "collection": "videos",
+        "slug": "website-psychology-explained",
+        "title": "Website Psychology Explained",
+        "summary": "",
+        "body": "",
+        "status": "published",
+        "featured": 1,
+        "sort_order": 1,
+        "fields": {
+            "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1170&auto=format&fit=crop",
+            "category": "",
+            "duration": "15:20",
+            "youtubeUrl": ""
+        }
+    },
+    {
+        "collection": "videos",
+        "slug": "automation-profit",
+        "title": "Automation কিভাবে profit বাঁচায়?",
+        "summary": "",
+        "body": "",
+        "status": "published",
+        "featured": 1,
+        "sort_order": 2,
+        "fields": {
+            "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1115&auto=format&fit=crop",
+            "category": "",
+            "duration": "10:10",
+            "youtubeUrl": ""
+        }
+    },
+    {
+        "collection": "videos",
+        "slug": "build-landing-pages-in-10-mins",
+        "title": "Build Landing Pages in 10 Mins",
+        "summary": "",
+        "body": "",
+        "status": "published",
+        "featured": 1,
+        "sort_order": 3,
+        "fields": {
+            "image": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1172&auto=format&fit=crop",
+            "category": "",
+            "duration": "08:55",
+            "youtubeUrl": ""
+        }
+    }
+]

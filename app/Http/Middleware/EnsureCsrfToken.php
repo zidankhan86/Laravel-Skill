@@ -17,13 +17,17 @@ class EnsureCsrfToken
             return $next($request);
         }
 
-        $token = (string) $request->header('x-csrf-token', '');
-        $expected = (string) $request->session()->get('csrf', '');
+        $token = (string) ($request->header('x-csrf-token') ?? $request->header('X-CSRF-TOKEN') ?? $request->input('_token') ?? '');
+        $expectedCustom = (string) $request->session()->get('csrf', '');
+        $expectedLaravel = (string) $request->session()->token();
 
-        if ($expected === '' || !hash_equals($expected, $token)) {
-            return response()->json(['error' => 'Invalid security token'], 403);
+        if (
+            ($expectedCustom !== '' && hash_equals($expectedCustom, $token)) ||
+            ($expectedLaravel !== '' && hash_equals($expectedLaravel, $token))
+        ) {
+            return $next($request);
         }
 
-        return $next($request);
+        return response()->json(['error' => 'Invalid security token'], 403);
     }
 }

@@ -99,6 +99,30 @@ class InitialContentSeeder extends Seeder
             return; // Preserve existing customer content
         }
 
+        $contentFile = base_path('server/content-seed.json');
+        if (file_exists($contentFile)) {
+            $raw = file_get_contents($contentFile);
+            $items = json_decode($raw, true);
+            if (is_array($items) && !empty($items)) {
+                foreach ($items as $idx => $item) {
+                    Content::create([
+                        'id' => (string) Str::uuid(),
+                        'collection' => $item['collection'],
+                        'slug' => $item['slug'],
+                        'title' => $item['title'],
+                        'summary' => $item['summary'] ?? '',
+                        'body' => $item['body'] ?? '',
+                        'status' => $item['status'] ?? 'published',
+                        'featured' => !empty($item['featured']),
+                        'sort_order' => $item['sort_order'] ?? $idx,
+                        'fields' => $item['fields'] ?? [],
+                        'version' => 1,
+                    ]);
+                }
+                return;
+            }
+        }
+
         $items = [
             // Services
             [

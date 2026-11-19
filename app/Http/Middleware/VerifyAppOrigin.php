@@ -21,6 +21,19 @@ class VerifyAppOrigin
         $rawOrigins = array_map('trim', explode(',', (string) $appOrigin));
         $allowedOrigins = [];
 
+        // Always allow the current application host and APP_URL
+        $currentOrigin = rtrim($request->getSchemeAndHttpHost(), '/');
+        $allowedOrigins[] = $currentOrigin;
+
+        $appUrl = config('app.url');
+        if ($appUrl) {
+            $allowedOrigins[] = rtrim((string) $appUrl, '/');
+        }
+
+        // Standard local dev origins
+        $allowedOrigins[] = 'http://127.0.0.1:8000';
+        $allowedOrigins[] = 'http://localhost:8000';
+
         foreach ($rawOrigins as $o) {
             if ($o === '') {
                 continue;
