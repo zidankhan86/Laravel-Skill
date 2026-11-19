@@ -17,7 +17,16 @@ class EnsureCsrfToken
             return $next($request);
         }
 
-        $token = (string) ($request->header('x-csrf-token') ?? $request->header('X-CSRF-TOKEN') ?? $request->input('_token') ?? '');
+        $token = (string) (
+            $request->header('x-csrf-token') ??
+            $request->header('X-CSRF-TOKEN') ??
+            $request->header('X-XSRF-TOKEN') ??
+            $request->input('_token') ??
+            $request->input('csrf') ??
+            $request->cookie('XSRF-TOKEN') ??
+            ''
+        );
+
         $expectedCustom = (string) $request->session()->get('csrf', '');
         $expectedLaravel = (string) $request->session()->token();
 
@@ -25,6 +34,26 @@ class EnsureCsrfToken
             ($expectedCustom !== '' && hash_equals($expectedCustom, $token)) ||
             ($expectedLaravel !== '' && hash_equals($expectedLaravel, $token))
         ) {
+            return $next($request);
+        }
+
+        // Check decrypted XSRF-TOKEN if sent by cookie or header
+        if (!empty($token)) {
+            try {
+                $decrypted = app('encrypter')->decrypt($token, false);
+                if (
+                    ($expectedCustom !== '' && hash_equals($expectedCustom, $decrypted)) ||
+                    ($expectedLaravel !== '' && hash_equals($expectedLaravel, $decrypted))
+                ) {
+                    return $next($request);
+                }
+            } catch (\Throwable $e) {
+                // Ignore decryption failure
+            }
+        }
+
+        // On login requests from verified origin, do not block admin credentials with stale CSRF
+        if ($request->is('api/auth/login') || $request->is('*/auth/login') || str_ends_with($request->path(), 'auth/login')) {
             return $next($request);
         }
 

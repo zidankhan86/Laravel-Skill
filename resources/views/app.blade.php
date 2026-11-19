@@ -6,6 +6,8 @@
 
         <title inertia>{{ config('app.name', 'Md Tanvir Hossain | eCommerce Architect & Automation Specialist') }}</title>
 
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+
         <!-- Dynamic Integration & SEO Header Scripts -->
         @viteReactRefresh
         @vite(['resources/css/app.css', 'resources/js/app.tsx'])

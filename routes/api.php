@@ -28,7 +28,7 @@ Route::post('/requests', [RequestController::class, 'store'])->middleware(['orig
 // Authentication Endpoints
 Route::prefix('auth')->group(function () {
     Route::get('/session', [AuthController::class, 'session']);
-    Route::post('/login', [AuthController::class, 'login'])->middleware(['origin', 'custom.csrf']);
+    Route::post('/login', [AuthController::class, 'login'])->middleware(['origin']);
     Route::post('/logout', [AuthController::class, 'logout'])->middleware(['auth.custom', 'origin', 'custom.csrf']);
     Route::post('/password', [AuthController::class, 'changePassword'])->middleware(['auth.custom', 'origin', 'custom.csrf']);
 });

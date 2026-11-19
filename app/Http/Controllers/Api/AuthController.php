@@ -20,16 +20,15 @@ class AuthController extends Controller
     public function session(Request $request): JsonResponse
     {
         $session = $request->session();
-        if (!$session->has('csrf')) {
-            $session->put('csrf', bin2hex(random_bytes(32)));
-        }
+        $token = $session->token();
+        $session->put('csrf', $token);
 
         $userId = $session->get('userId') ?? Auth::id();
         $authenticated = !empty($userId);
 
         return response()->json([
             'authenticated' => $authenticated,
-            'csrf' => $session->get('csrf'),
+            'csrf' => $token,
         ]);
     }
 
@@ -73,12 +72,12 @@ class AuthController extends Controller
         $request->session()->put('userId', $user->id);
         Auth::login($user);
 
-        $csrf = bin2hex(random_bytes(32));
-        $request->session()->put('csrf', $csrf);
+        $token = $request->session()->token();
+        $request->session()->put('csrf', $token);
 
         return response()->json([
             'authenticated' => true,
-            'csrf' => $csrf,
+            'csrf' => $token,
         ]);
     }
 

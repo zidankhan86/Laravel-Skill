@@ -13,7 +13,8 @@ class AuthenticateAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!$request->session()->has('userId')) {
+        $userId = $request->session()->get('userId') ?? \Illuminate\Support\Facades\Auth::id();
+        if (!$userId) {
             return response()->json(['error' => 'Sign in required'], 401);
         }
 

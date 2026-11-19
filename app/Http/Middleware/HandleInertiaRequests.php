@@ -43,6 +43,9 @@ class HandleInertiaRequests extends Middleware
 
         $userId = $installed ? ($request->session()->get('userId') ?? $request->user()?->id) : null;
 
+        $csrf = $request->session()->token();
+        $request->session()->put('csrf', $csrf);
+
         return [
             ...parent::share($request),
             'auth' => [
@@ -56,7 +59,7 @@ class HandleInertiaRequests extends Middleware
                 'message' => fn () => $request->session()->get('message'),
                 'error' => fn () => $request->session()->get('error'),
             ],
-            'csrf_token' => csrf_token(),
+            'csrf_token' => $csrf,
         ];
     }
 }

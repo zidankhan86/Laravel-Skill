@@ -41,20 +41,46 @@ import {
 import { applyAppearance, appearanceDefaults } from "@/lib/theme";
 import definition from "@/lib/settings-definition.json";
 let csrf = "";
+function getCsrfToken(): string {
+  if (csrf) return csrf;
+  if (typeof document !== "undefined") {
+    const meta = document.querySelector('meta[name="csrf-token"]');
+    if (meta) {
+      const val = meta.getAttribute("content");
+      if (val) return val;
+    }
+    const match = document.cookie.match(/(^|;)\s*XSRF-TOKEN=([^;]+)/);
+    if (match) {
+      try {
+        return decodeURIComponent(match[2]);
+      } catch (e) {
+        return match[2];
+      }
+    }
+  }
+  return "";
+}
+
 async function api(path: string, method = "GET", body?: any) {
   let effectiveMethod = method;
   if (body instanceof FormData && (method === "PUT" || method === "PATCH")) {
     body.append("_method", method);
     effectiveMethod = "POST";
   }
+  const token = csrf || getCsrfToken();
+  const headers: Record<string, string> = {
+    ...(body instanceof FormData
+      ? {}
+      : { "Content-Type": "application/json" }),
+  };
+  if (token) {
+    headers["X-CSRF-Token"] = token;
+    headers["X-XSRF-TOKEN"] = token;
+  }
   const response = await fetch("/api/" + path, {
     method: effectiveMethod,
-    headers: {
-      ...(body instanceof FormData
-        ? {}
-        : { "Content-Type": "application/json" }),
-      "X-CSRF-Token": csrf,
-    },
+    headers,
+    credentials: "same-origin",
     body:
       body === undefined
         ? undefined
