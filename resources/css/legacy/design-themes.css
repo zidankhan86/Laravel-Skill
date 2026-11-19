@@ -1,0 +1,203 @@
+/* Theme variants share content and behavior. These are layout changes, not preset recolors. */
+html[data-website-design="studio"] .portfolio .hero-composition {
+  display: flex;
+  flex-direction: column;
+  gap: 42px;
+}
+html[data-website-design="studio"] .portfolio .hero-copy {
+  text-align: center;
+  max-width: 900px;
+  margin: auto;
+}
+html[data-website-design="studio"] .portfolio .hero-copy h1 {
+  font-size: clamp(3rem, 7.5vw, 7rem);
+}
+html[data-website-design="studio"] .portfolio .hero-actions {
+  justify-content: center;
+}
+html[data-website-design="studio"] .portfolio .hero-description {
+  margin-inline: auto;
+  max-width: 700px;
+}
+html[data-website-design="studio"] .portfolio .hero-visual {
+  width: min(70%, 440px);
+  margin: 0 auto 30px;
+}
+html[data-website-design="studio"] .portfolio .portrait-card {
+  transform: none;
+  border-radius: 220px 220px 40px 40px;
+  padding: 18px;
+}
+html[data-website-design="studio"] .portfolio .portrait-caption {
+  padding-top: 10px;
+}
+html[data-website-design="studio"] .portfolio .hero-skill {
+  font-size: 10px;
+  padding: 10px 12px;
+}
+html[data-website-design="studio"] .portfolio .section-intro {
+  text-align: center;
+  display: block;
+  max-width: 800px;
+  margin-inline: auto;
+}
+html[data-website-design="studio"] .portfolio .section-intro p {
+  margin: 18px auto 0;
+}
+html[data-website-design="studio"] .portfolio .service-bento {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+html[data-website-design="studio"] .portfolio .service-tile {
+  min-height: unset;
+  grid-column: auto;
+  border-radius: 32px;
+}
+html[data-website-design="studio"] .portfolio #projects .project-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+html[data-website-design="studio"]
+  .portfolio
+  #projects
+  .project-grid
+  > div:first-child {
+  display: block;
+  grid-column: auto;
+}
+html[data-website-design="studio"]
+  .portfolio
+  #projects
+  .project-grid
+  > div:first-child
+  > div:first-child {
+  height: auto;
+  min-height: 0;
+}
+html[data-website-design="studio"][data-studio-portrait-shape="square"]
+  .portfolio
+  :is(.portrait-card, .portrait-card > img) {
+  border-radius: 24px;
+}
+html[data-website-design="executive"] .portfolio {
+  font-family: Inter, "Hind Siliguri", sans-serif;
+}
+html[data-website-design="executive"] .portfolio .editorial-accent {
+  font-family: inherit;
+  font-style: normal;
+  font-weight: 700;
+}
+html[data-website-design="executive"] .portfolio .hero-composition {
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 72px;
+  align-items: center;
+}
+html[data-website-design="executive"] .portfolio .hero-visual {
+  order: -1;
+  margin: 0;
+}
+html[data-website-design="executive"] .portfolio .hero-copy h1 {
+  font-size: clamp(3rem, 5.8vw, 5.5rem);
+  font-weight: 750;
+  letter-spacing: -0.055em;
+}
+html[data-website-design="executive"] .portfolio .hero-copy h2 {
+  font-size: clamp(1.25rem, 2.3vw, 2rem);
+}
+html[data-website-design="executive"] .portfolio .portrait-card {
+  transform: none;
+  border-radius: 16px;
+  padding: 20px;
+  background: var(--p-surface);
+  border: 1px solid var(--p-line);
+  color: var(--p-ink);
+}
+html[data-website-design="executive"] .portfolio .portrait-card > img {
+  border-radius: 8px;
+  aspect-ratio: 4/5;
+}
+html[data-website-design="executive"] .portfolio .hero-orbit {
+  display: none;
+}
+html[data-website-design="executive"] .portfolio .hero-skill {
+  border-radius: 8px;
+  font-size: 10px;
+}
+html[data-website-design="executive"] .portfolio .service-bento {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+html[data-website-design="executive"] .portfolio .service-tile {
+  grid-column: auto;
+  min-height: unset;
+  border-radius: 12px;
+}
+html[data-website-design="executive"]
+  .portfolio
+  :is(.quote-card, .video-card, #projects .project-grid > div) {
+  border-radius: 12px;
+}
+html[data-website-design="executive"][data-executive-portrait-side="right"]
+  .portfolio
+  .hero-visual {
+  order: 1;
+}
+html[data-website-density="compact"]
+  .portfolio
+  :is(.public-section, section.py-24) {
+  padding-block: 60px;
+}
+html[data-website-corners="square"]
+  .portfolio
+  :is(
+    .service-tile,
+    .quote-card,
+    .video-card,
+    .event-masonry figure,
+    #projects .project-grid > div,
+    .closing-cta,
+    .p-button
+  ) {
+  border-radius: 6px;
+}
+html[data-website-motion="off"] .portfolio *,
+html[data-website-motion="off"] .portfolio *::before,
+html[data-website-motion="off"] .portfolio *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+html[data-website-motion="off"] .portfolio [data-reveal] {
+  opacity: 1 !important;
+  translate: none !important;
+}
+@media (max-width: 900px) {
+  html[data-website-design="executive"] .portfolio .hero-composition {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+  }
+  html[data-website-design="executive"] .portfolio .hero-visual {
+    order: 1;
+    width: min(85%, 460px);
+    margin: auto;
+  }
+  html[data-website-design="executive"] .portfolio .hero-copy {
+    width: 100%;
+  }
+  html[data-website-design="studio"]
+    .portfolio
+    :is(.service-bento, #projects .project-grid),
+  html[data-website-design="executive"] .portfolio .service-bento {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 600px) {
+  html[data-website-design="studio"] .portfolio .hero-visual {
+    width: 80%;
+  }
+  html[data-website-design="studio"] .portfolio .hero-copy h1,
+  html[data-website-design="executive"] .portfolio .hero-copy h1 {
+    font-size: clamp(2.6rem, 12vw, 4rem);
+  }
+}
+html[data-website-motion="off"] .portfolio [style*="transform"] { transform:none!important; }
