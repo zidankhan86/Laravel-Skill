@@ -3,8 +3,11 @@
 import { COPY } from "@/lib/content";
 import { EditText, contentSource } from "./EditBinding";
 import DateTimePicker from "./DateTimePicker";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { SERVICES } from "@/lib/constants";
+import { CheckCircle2, AlertCircle, X } from "lucide-react";
+
 export default function RequestForm({
   initialKind = "booking",
   headingLevel: Heading = "h3",
@@ -19,6 +22,26 @@ export default function RequestForm({
     [message, setMessage] = useState(""),
     [error, setError] = useState(false),
     [key, setKey] = useState(() => crypto.randomUUID());
+
+  const [toast, setToast] = useState<{
+    show: boolean;
+    type: "success" | "error";
+    title: string;
+    message: string;
+  } | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!toast?.show) return;
+    const timer = setTimeout(() => {
+      setToast((prev) => (prev ? { ...prev, show: false } : null));
+    }, 7000);
+    return () => clearTimeout(timer);
+  }, [toast?.show]);
   return (
     <form
       className="public-request-form w-full space-y-4 p-6 text-white"
@@ -30,6 +53,12 @@ export default function RequestForm({
           setDateInvalid(true);
           setError(true);
           setMessage("Please choose a preferred date and time.");
+          setToast({
+            show: true,
+            type: "error",
+            title: "Date & Time Required",
+            message: "Please choose a preferred date and time for your call.",
+          });
           e.currentTarget
             .querySelector<HTMLButtonElement>(".date-picker-trigger")
             ?.focus();
@@ -63,6 +92,19 @@ export default function RequestForm({
           if (!response.ok) throw Error(data.error || "Request failed");
           setMessage(data.message);
           setError(false);
+          setToast({
+            show: true,
+            type: "success",
+            title:
+              kind === "booking"
+                ? "Booking Request Received!"
+                : "Message Sent!",
+            message:
+              data.message ||
+              (kind === "booking"
+                ? "Thank you! We've received your booking request and will contact you shortly."
+                : "Thank you! Your message has been received."),
+          });
           form.reset();
           setSelectedTime("");
           setDateInvalid(false);
@@ -70,6 +112,12 @@ export default function RequestForm({
         } catch (e: any) {
           setError(true);
           setMessage(e.message);
+          setToast({
+            show: true,
+            type: "error",
+            title: "Submission Error",
+            message: e.message || "Failed to submit request. Please try again.",
+          });
         } finally {
           setBusy(false);
         }
@@ -184,6 +232,70 @@ export default function RequestForm({
           {message}
         </p>
       )}
+
+      {mounted &&
+        toast?.show &&
+        createPortal(
+          <div
+            role="status"
+            aria-live="polite"
+            className="fixed top-6 left-1/2 -translate-x-1/2 z-[999999] w-[92vw] max-w-lg pointer-events-auto"
+            style={{
+              animation: "toastSlideDown 0.35s cubic-bezier(0.16, 1, 0.3, 1)",
+            }}
+          >
+            <div
+              className={`relative flex items-start gap-3.5 p-4 sm:p-5 rounded-2xl shadow-2xl border backdrop-blur-xl ${
+                toast.type === "success"
+                  ? "bg-neutral-950/95 border-emerald-500/50 text-white shadow-[0_12px_45px_-10px_rgba(16,185,129,0.4)]"
+                  : "bg-neutral-950/95 border-red-500/50 text-white shadow-[0_12px_45px_-10px_rgba(239,68,68,0.4)]"
+              }`}
+            >
+              <div
+                className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 mt-0.5 ${
+                  toast.type === "success"
+                    ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"
+                    : "bg-red-500/20 text-red-400 border border-red-500/30"
+                }`}
+              >
+                {toast.type === "success" ? (
+                  <CheckCircle2 size={22} className="stroke-[2.2]" />
+                ) : (
+                  <AlertCircle size={22} className="stroke-[2.2]" />
+                )}
+              </div>
+
+              <div className="flex-1 min-w-0 pr-2">
+                <h4 className="font-bold text-sm sm:text-base text-white tracking-wide">
+                  {toast.title}
+                </h4>
+                <p className="text-xs sm:text-sm text-neutral-300 mt-0.5 leading-relaxed">
+                  {toast.message}
+                </p>
+              </div>
+
+              <button
+                type="button"
+                onClick={() =>
+                  setToast((prev) => (prev ? { ...prev, show: false } : null))
+                }
+                className="text-neutral-400 hover:text-white p-1 rounded-lg hover:bg-white/10 transition-colors shrink-0"
+                aria-label="Close notification"
+              >
+                <X size={18} />
+              </button>
+
+              <div
+                className={`absolute bottom-0 left-4 right-4 h-0.5 rounded-full ${
+                  toast.type === "success"
+                    ? "bg-emerald-500/50"
+                    : "bg-red-500/50"
+                }`}
+              />
+            </div>
+          </div>,
+          document.body
+        )}
     </form>
   );
 }

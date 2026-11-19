@@ -1,9 +1,20 @@
-@import "../../styles.css";
-@import "../../public.css";
-@import "../../design-themes.css";
-@import "../../components/admin.css";
-@import "../../components/admin-workspace.css";
-@import "../../components/visual-editor.css";
+@import "./legacy/styles.css";
+@import "./legacy/public.css";
+@import "./legacy/design-themes.css";
+@import "./legacy/components/admin.css";
+@import "./legacy/components/admin-workspace.css";
+@import "./legacy/components/visual-editor.css";
+
+@keyframes toastSlideDown {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -20px) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+}
 
 body {
   font-family: "Inter", sans-serif;
