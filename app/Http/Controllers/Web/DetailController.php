@@ -42,9 +42,7 @@ class DetailController extends Controller
             ->orderBy('created_at')
             ->get();
 
-        $settings = Setting::all()->mapWithKeys(function (Setting $s) {
-            return [$s->id => $s->value];
-        });
+        $settings = Setting::allMapped();
 
         return Inertia::render('Detail', [
             'record' => $record,

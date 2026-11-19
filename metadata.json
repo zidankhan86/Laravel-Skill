@@ -1,8 +1,0 @@
-{
-  "name": "Md Tanvir Hossain Portfolio",
-  "description": "High-end personal brand portfolio for Md Tanvir Hossain, eCommerce Website Architect & Automation Specialist.",
-  "requestFramePermissions": [
-    "camera",
-    "microphone"
-  ]
-}

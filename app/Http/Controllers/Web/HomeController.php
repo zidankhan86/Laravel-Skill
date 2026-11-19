@@ -21,9 +21,7 @@ class HomeController extends Controller
             ->orderBy('created_at')
             ->get();
 
-        $settings = Setting::all()->mapWithKeys(function (Setting $s) {
-            return [$s->id => $s->value];
-        });
+        $settings = Setting::allMapped();
 
         $userId = $request->session()->get('userId') ?? $request->user()?->id;
         $isEditing = $request->query('edit') === '1' && !empty($userId);

@@ -1,4 +1,19 @@
 {
+  "brand": {
+    "name": "Md Tanvir Hossain",
+    "email": "devtanvirhossain@gmail.com",
+    "phone": "01774338612",
+    "aboutBio": "আমি গত ৫ বছর ধরে বাংলাদেশের ই-কমার্স ইন্ডাস্ট্রিতে কাজ করছি। আমার মূল লক্ষ্য হলো উদ্যোক্তাদের এমন একটি সিস্টেম উপহার দেওয়া যা তাদের ব্যবসার জটিলতা কমিয়ে দেয় এবং অটোমেশনের মাধ্যমে প্রফিট নিশ্চিত করে। টেকনোলজি যখন সঠিক সাইকোলজির সাথে যুক্ত হয়, তখনই একটি বিজনেস স্কেল করা সম্ভব।",
+    "whatsapp": "8801774338612",
+    "founderOf": "Fast IT Care",
+    "founderUrl": "https://fastitcare.com.bd",
+    "social_github": "https://github.com/m-tanvir-hossain",
+    "social_twitter": "https://x.com/mTanvirHossain",
+    "social_youtube": "https://www.youtube.com/@m.tanvir.hossain",
+    "social_facebook": "https://www.facebook.com/its.tanvir.hossain",
+    "social_linkedin": "https://www.linkedin.com/in/md-tanvir-hossain/",
+    "social_instagram": "https://www.instagram.com/m.tanvir.hossain/"
+  },
   "about": {
     "AboutMeSection_1": " My Journey",
     "AboutMeSection_2": "I Help Founders Transition From ",

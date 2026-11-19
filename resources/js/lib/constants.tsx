@@ -55,6 +55,7 @@ export function hydrate(data: any) {
   data.settings.homepage.heroSecondaryTarget = target(
     data.settings.homepage.heroSecondaryTarget,
   );
+  data.settings.navigation = data.settings.navigation || {};
   data.settings.navigation.footerMenu = filterSectionMenu(
     data.settings.navigation.footerMenu || "",
     visible,
@@ -77,7 +78,7 @@ export function hydrate(data: any) {
   for (const record of content)
     if (record?.collection === "services" && record.fields)
       record.fields.ctaUrl = target(record.fields.ctaUrl);
-  const brand = data.settings.brand;
+  const brand = data.settings.brand || {};
   BRAND_INFO = {
     ...brand,
     socials: Object.fromEntries(

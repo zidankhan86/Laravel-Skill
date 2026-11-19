@@ -20,9 +20,7 @@ class PageController extends Controller
             ->orderBy('created_at')
             ->get();
 
-        $settings = Setting::all()->mapWithKeys(function (Setting $s) {
-            return [$s->id => $s->value];
-        });
+        $settings = Setting::allMapped();
 
         return compact('content', 'settings');
     }

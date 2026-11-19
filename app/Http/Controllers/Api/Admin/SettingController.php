@@ -18,6 +18,14 @@ class SettingController extends Controller
      */
     public function index(): JsonResponse
     {
+        if (!Setting::find('brand')) {
+            Setting::create([
+                'id' => 'brand',
+                'value' => Setting::defaultBrand(),
+                'version' => 1,
+            ]);
+        }
+
         $settings = Setting::all()->mapWithKeys(function (Setting $s) {
             return [
                 $s->id => [

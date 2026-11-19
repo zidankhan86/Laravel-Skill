@@ -57,9 +57,7 @@ class PublicController extends Controller
                 return $this->formatPublicRecord($item);
             });
 
-        $settings = Setting::all()->mapWithKeys(function (Setting $setting) {
-            return [$setting->id => $setting->value];
-        });
+        $settings = Setting::allMapped();
 
         return response()->json([
             'content' => $content,

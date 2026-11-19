@@ -46,6 +46,7 @@ class InitialContentSeeder extends Seeder
 
         // Ensure critical baseline settings exist even if file was missing
         $defaults = [
+            'brand' => Setting::defaultBrand(),
             'appearance' => [
                 'websiteDesign' => 'editorial',
                 'websiteTheme' => 'dark',
