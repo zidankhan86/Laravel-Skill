@@ -195,6 +195,7 @@ class InstallationManager
 
         // Dynamically update runtime database connection configuration
         config([
+            'database.default' => 'mysql',
             'database.connections.mysql.host' => $envConfig['DB_HOST'],
             'database.connections.mysql.port' => $envConfig['DB_PORT'],
             'database.connections.mysql.database' => $envConfig['DB_DATABASE'],

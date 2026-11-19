@@ -41,6 +41,8 @@ storage/logs/*
 bootstrap/cache/*.php
 !bootstrap/cache/.gitignore
 .phpunit.result.cache
+public/storage
+public/hot
 
 # Ensure production frontend build assets are tracked for zero-dependency web deployments
 !public/build/
